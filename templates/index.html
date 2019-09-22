@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+   <title> Monotonicty vs Periodicity </title>
+
+   <link rel="stylesheet" type="text/css" href="https://cdn.bokeh.org/bokeh/release/bokeh-1.3.4.min.css"/>
+   <link rel="stylesheet" type="text/css" href="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-1.3.4.min.css"/>
+   <link rel="stylesheet" type="text/css" href="http://cdn.pydata.org/bokeh/release/bokeh-tables-1.3.4.min.css"/>
+
+   <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-1.3.4.min.js"></script>
+   <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-1.3.4.min.js"></script>
+   <script type="text/javascript" src="http://cdn.pydata.org/bokeh/release/bokeh-tables-1.3.4.min.js"></script>
+
+</head>
+<body>
+<h1>
+  Hello!
+</h1>
+
+<form action="/">
+
+Process probability: <input type="number" name="process_probability" step="0.001" min="0" max="1" value={{ process_prob }}> <br>
+<br> Desired overall success probability (written A / B) <br>
+A: <input type="number" name="desired_numerator" step="1" min="0" value="{{ desired_numer }}"> <br>
+B: <input type="number" name="desired_denominator" step="1" min="1" value="{{ desired_denom }}"> <br> <br>
+Number of trials: <input type="number" name="number_of_trials" step="1" min="10" max="100" value="{{ num_trials }}"> <br>
+
+<input type="submit">
+</form>
+
+{{ script | safe }}
+{{ div | safe }}
+</body>
+
+</html>
