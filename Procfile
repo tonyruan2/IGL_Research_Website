@@ -1,1 +1,1 @@
-web: gunicorn app:igl
+web: gunicorn igl:app
