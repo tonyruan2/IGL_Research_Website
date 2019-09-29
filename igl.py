@@ -1,4 +1,7 @@
 from flask import Flask, render_template, request
+from flask_bootstrap import Bootstrap
+from flask_nav.elements import Navbar, Subgroup, View
+from flask_nav import Nav
 from bokeh.plotting import figure
 from bokeh.embed import components
 from bokeh.models import ColumnDataSource
@@ -44,14 +47,17 @@ def bernoulli_trial_sum(success_probability, min_successes, num_trials):
 
 
 def compute_model(process_prob, min_success_rate, num_trials):
-    current_trial_count = 1
-    results = []
-    while current_trial_count <= num_trials:
-        min_successes = math.ceil(min_success_rate * current_trial_count)
-        long_term_prob = bernoulli_trial_sum(process_prob, min_successes, current_trial_count)
-        results.append(long_term_prob)
-        current_trial_count += 1
-    return results
+    try:
+        current_trial_count = 1
+        results = []
+        while current_trial_count <= num_trials:
+            min_successes = math.ceil(min_success_rate * current_trial_count)
+            long_term_prob = bernoulli_trial_sum(process_prob, min_successes, current_trial_count)
+            results.append(long_term_prob)
+            current_trial_count += 1
+        return results
+    except ValueError:
+        return [0 for x in range(num_trials)]
 
 
 def create_model(process_prob, desired_prob, num_trials):
@@ -107,22 +113,50 @@ def create_model(process_prob, desired_prob, num_trials):
     return model
 
 app = Flask(__name__)
+Bootstrap(app)
+nav = Nav(app)
+
+@nav.navigation('nav_bar')
+def create_navbar():
+    home_view = View('Home', 'homepage')
+    model_view = View('Model', 'modelpage')
+    findings_view = View('Findings', 'findingspage')
+    about_view = View('About', 'aboutpage')
+    return Navbar('', home_view, model_view, findings_view, about_view)
+
 
 @app.route('/')
-def index():
+def homepage():
+    return render_template('index.html')
+
+
+@app.route('/model')
+def modelpage():
     process_prob = request.args.get('process_probability')
     desired_numer = request.args.get("desired_numerator")
     desired_denom = request.args.get("desired_denominator")
     num_trials = request.args.get('number_of_trials')
 
     if process_prob == None or desired_numer == None or desired_denom == None or num_trials == None:
-        model = create_model(0.5, 0.5, 100);
-        script, div = components(model)
-        return render_template('index.html', script=script, div=div, process_prob=0.5, desired_numer=1, desired_denom=2, num_trials=100)
-
+        process_prob = 0.5
+        desired_numer = 1
+        desired_denom = 2
+        num_trials = 100
+        
     model = create_model(float(process_prob), float(desired_numer) / float(desired_denom), int(num_trials));
     script, div = components(model)
-    return render_template('index.html', script=script, div=div, process_prob=process_prob, desired_numer=desired_numer, desired_denom=desired_denom, num_trials=num_trials)
+    return render_template('model.html', script=script, div=div, process_prob=process_prob, desired_numer=desired_numer, desired_denom=desired_denom, num_trials=num_trials)
+
+
+@app.route('/findings')
+def findingspage():
+    return render_template('findings.html')
+
+
+@app.route('/about')
+def aboutpage():
+    return render_template('about.html')
+
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
