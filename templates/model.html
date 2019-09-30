@@ -1,7 +1,7 @@
 {% extends "bootstrap/base.html" %}
 
 {% block title %}
-Model
+Monotonicty vs Periodicity
 {% endblock %}
 
 {% block styles %}
@@ -16,18 +16,28 @@ Model
 {% endblock %}
 
 {% block content %}
-<<div class="container">
-  <h1>Hello!</h1>
-  <form action="/model">
-  Process probability: <input type="number" name="process_probability" step="0.001" min="0" max="1" value={{ process_prob }}> <br>
-  <br> Desired overall success probability (written A / B) <br>
-  A: <input type="number" name="desired_numerator" step="1" min="0" value="{{ desired_numer }}"> <br>
-  B: <input type="number" name="desired_denominator" step="1" min="1" value="{{ desired_denom }}"> <br> <br>
-  Number of trials: <input type="number" name="number_of_trials" step="1" min="10" max="100" value="{{ num_trials }}"> <br>
-  <input type="submit">
-  </form>
-  {{ script | safe }}
-  {{ div | safe }}
+<div class="container">
+  <div class="row">
+    <div class="col-md-2 jumbotron" style="background-color:lightblue">
+      <form action="/model">
+      <strong>Process probability</strong> <input type="number" style="width: 5em;" name="process_probability" step="0.0001" min="0" max="1" value={{ process_prob }}> <br>
+      <br> <strong>Desired probability (A / B)</strong> <br>
+      <input type="number" style="width: 5em;" name="desired_numerator" step="1" min="0" value="{{ desired_numer }}"> <br>
+      <input type="number" style="width: 5em;" name="desired_denominator" step="1" min="1" value="{{ desired_denom }}"> <br> <br>
+      <strong>Max Trials</strong> <input type="number" style="width: 5em;" name="number_of_trials" step="1" min="10" max="100" value="{{ num_trials }}"> <br>
+      <br>
+      <input type="submit" class="btn btn-success">
+      </form>
+    </div>
+    <div class="col-md-1">
+
+    </div>
+    <div class="container-fluid col-md-9">
+      {{ script | safe }}
+      {{ div | safe }}
+    </div>
+  </div>
+  <br>
 </div>
 {% endblock %}
 

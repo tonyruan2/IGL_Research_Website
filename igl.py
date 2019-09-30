@@ -69,7 +69,7 @@ def create_model(process_prob, desired_prob, num_trials):
     title = 'Probability Model'
 
     model = figure(plot_width=900,
-                  plot_height=900,
+                  plot_height=660,
                   x_range=(0, num_trials + 3),
                   y_range=(0, 1.03),
                   x_axis_label='Trial count',
@@ -119,15 +119,21 @@ nav = Nav(app)
 @nav.navigation('nav_bar')
 def create_navbar():
     home_view = View('Home', 'homepage')
+    math_view = View('Math', 'mathpage')
     model_view = View('Model', 'modelpage')
     findings_view = View('Findings', 'findingspage')
     about_view = View('About', 'aboutpage')
-    return Navbar('', home_view, model_view, findings_view, about_view)
+    return Navbar('', home_view, math_view, model_view, findings_view, about_view)
 
 
 @app.route('/')
 def homepage():
     return render_template('index.html')
+
+
+@app.route('/math')
+def mathpage():
+    return render_template('math.html')
 
 
 @app.route('/model')
@@ -142,7 +148,7 @@ def modelpage():
         desired_numer = 1
         desired_denom = 2
         num_trials = 100
-        
+
     model = create_model(float(process_prob), float(desired_numer) / float(desired_denom), int(num_trials));
     script, div = components(model)
     return render_template('model.html', script=script, div=div, process_prob=process_prob, desired_numer=desired_numer, desired_denom=desired_denom, num_trials=num_trials)

@@ -1,5 +1,8 @@
 {% extends "bootstrap/base.html" %}
-{% block title %}This is an example page{% endblock %}
+
+{% block title %}
+Monotonicty vs Periodicity
+{% endblock %}
 
 {% block styles %}
 {{super()}}
@@ -15,17 +18,38 @@
 {% block content %}
 <div style="background:lightblue" class="jumbotron text-center">
   <div style="font-family: 'Francois One', serif;" class="container">
-    <h1>Monotonicty versus Periodicity</h1>
+    <h1>Monotonicty vs Periodicity</h1>
     <h2>in the</h2>
     <h2>Law of Large Numbers</h2>
     <br>
-    <a class="btn btn-primary" data-toggle="collapse" data-target="#overview">Learn more</a>
+    <a class="btn btn-primary" data-toggle="collapse" data-target="#overview" role="button">Learn more</a>
   </div>
 </div>
 
 <div class="container">
-  <div id="overview" class="collapse">
-    <p>Hi</p>
+  <div id="overview" class="collapse col-md-12"">
+    <h1 class="page-header">Project Overview</h1>
+
+    <div class="container" style="font-size:18px;">
+      <p">Suppose we have a process that succeeds X% amount of time and all experiments are independent. Let’s call X the process probability.</p>
+      <p>We want to achieve at least Y% success when running the process over a set number of trials N. Let’s call Y the desired probability, and assume Y is rational. That is, Y can be written as a over b, where a and b are integers.</p>
+      <p>What value of N will give us the greatest probability to achieve <em>at least</em> our desired probability?</p>
+      <hr>
+      <p>The Law of Large Numbers tells us three possible monotonic behaviors as N tends to infinity.</p> <br>
+      <ul>
+        <li>If our process probability is <strong>less than</strong> our desired probability, we will have a <strong>0%</strong> chance to reach our desired probability.</li> <br>
+        <li>If our process probability is <strong>equal to</strong> our desired probability, we will have a <strong>50%</strong> chance to reach our desired probability.</li> <br>
+        <li>If our process probability is <strong>greater than</strong> our desired probability, we will have a <strong>100%</strong> chance to reach our desired probability.</li>
+      </ul>
+      <hr>
+      <p>But suppose we cannot run the process a large amount of times. That is, suppose the process is costly to run and requires a substantial amount of resources.</p>
+      <p>Let’s limit the number of trials N to a positive integer T, which is less than or equal to 100. In other words, assume we have the resources to run between 1 and T trials.</p>
+      <p>Then what should we choose N to be to maximize our probability to achieve our desired probability? Alternatively, what should we choose N to be to minimize our probability to achieve our desired probability?</p>
+      <hr>
+      <p>It turns out that there is a certain periodic behavior in the short run. To elaborate, as N increases, the probability to achieve our desired probability appears to converge to the long-run monotone behavior in a periodic manner. The goal of our project is to investigate this periodic behavior.</p>
+    </div>
+    <br>
+    <br>
   </div>
 </div>
 
