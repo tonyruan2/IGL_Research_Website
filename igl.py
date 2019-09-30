@@ -8,7 +8,7 @@ from bokeh.models import ColumnDataSource
 from bokeh.models import HoverTool
 from bokeh.models import Legend
 import math
-
+import random
 
 def factorial(num):
     f = 1
@@ -60,15 +60,24 @@ def compute_model(process_prob, min_success_rate, num_trials):
         return [0 for x in range(num_trials)]
 
 
-def create_model(process_prob, desired_prob, num_trials):
-    data = {'trial_count': [x + 1 for x in range(num_trials)],
-            'probability': compute_model(process_prob, desired_prob, num_trials)}
+def generate_color(periodicity_num, count):
+    if periodicity_num <= 8:
+        entries = ['#0000FF', '#800080', '#FF00FF', '#008000', '#00FFFF','#808000', '#FA8072', '#7DEE3A']
+        return entries[count]
 
-    data_cds = ColumnDataSource(data)
+    entries = ['0', '1', '2', '3', '4', '5', '6', '7', '8', 'A', 'B', 'C', 'D', 'E', 'F']
+    color = '#'
+    while len(color) < 7:
+        color += entries[random.randint(0, 15) - 1]
+    return color
+
+
+def create_model(process_prob, desired_numer, desired_denom, num_trials):
+    desired_prob = float(desired_numer) / float(desired_denom)
 
     title = 'Probability Model'
 
-    model = figure(plot_width=900,
+    model = figure(plot_width=940,
                   plot_height=660,
                   x_range=(0, num_trials + 3),
                   y_range=(0, 1.03),
@@ -90,26 +99,43 @@ def create_model(process_prob, desired_prob, num_trials):
     model.yaxis.axis_label_text_font_size = '18pt'
     model.yaxis.major_label_text_font_size = '16pt'
 
-    model.circle(x='trial_count',
-                y='probability',
-                source=data_cds,
-                size=10,
-                color='blue')
+    periodicity_num = desired_denom
+    if (desired_denom % desired_numer == 0):
+        periodicity_num = desired_denom / desired_numer
 
-    tooltips = [
-        ('Trial count', '@trial_count'),
-        ('Probability', '@probability'),
-    ]
+    periodicity_num = int (periodicity_num)
+    count = 0
+    while count < periodicity_num and count <= num_trials:
+        trials = [x for x in range(count, 101, periodicity_num) if x != 0 and x <= num_trials]
+        probabilities = [bernoulli_trial_sum(process_prob, math.ceil(desired_prob * current_trial_count), current_trial_count) for current_trial_count in trials]
+        data = {'trial_count': trials,
+                'probability': probabilities}
 
-    hover_glyph = model.circle(x='trial_count',
-                              y='probability',
-                              source=data_cds,
-                              size=15,
-                              alpha=0,
-                              hover_fill_color='orange',
-                              hover_alpha=1)
+        data_cds = ColumnDataSource(data)
 
-    model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
+        color = generate_color(periodicity_num, count)
+        model.circle(x='trial_count',
+                    y='probability',
+                    source=data_cds,
+                    size=10,
+                    color=color)
+
+        hover_glyph = model.circle(x='trial_count',
+                                  y='probability',
+                                  source=data_cds,
+                                  size=15,
+                                  alpha=0,
+                                  hover_fill_color='orange',
+                                  hover_alpha=1)
+
+        tooltips = [
+            ('Trial count', '@trial_count'),
+            ('Probability', '@probability'),
+        ]
+
+        model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
+        count += 1
+
     return model
 
 app = Flask(__name__)
@@ -149,7 +175,7 @@ def modelpage():
         desired_denom = 2
         num_trials = 100
 
-    model = create_model(float(process_prob), float(desired_numer) / float(desired_denom), int(num_trials));
+    model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials));
     script, div = components(model)
     return render_template('model.html', script=script, div=div, process_prob=process_prob, desired_numer=desired_numer, desired_denom=desired_denom, num_trials=num_trials)
 
