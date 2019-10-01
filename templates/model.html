@@ -26,7 +26,7 @@ Monotonicty vs Periodicity
       <input type="number" style="width: 5em;" name="desired_denominator" step="1" min="1" value="{{ desired_denom }}"> <br> <br>
       <strong>Max Trials</strong> <input type="number" style="width: 5em;" name="number_of_trials" step="1" min="10" max="100" value="{{ num_trials }}"> <br>
       <br>
-      <input type="submit" class="btn btn-success">
+      <input type="submit" class="btn btn-success" value="Create">
       </form>
     </div>
 
@@ -40,12 +40,12 @@ Monotonicty vs Periodicity
   <div class="jumbotron">
     <h2>User Guide</h2>
     <p>Input valid numbers for the process probability, desired probability, and max trials.</p>
-    <p>Click submit to generate a model.</p>
+    <p>Click the create button to create a model.</p>
     <p>Use the tools provided to pan, zoom, reset, save, and hover.</p>
     <hr>
     <h2>Model Information</h2>
-    <p>This model shows the probability of achieving the desired probability with a certain trial count.</p>
-    <p>The points on the graph are colored according to their value mod B, where (A / B) is the desired probability in simplest terms. Points with trial counts that are equivalent mod B have the same color.</p>
+    <p>This model shows the probability of achieving at least the desired probability with a certain trial count.</p>
+    <p>The points on the graph are colored according to their trial count mod B, where (A / B) is the desired probability in simplest terms. Points with trial counts that are equivalent mod B have the same color.</p>
     <p>When B is less than or equal to 8, preset colors are used. Otherwise, random colors are generated for each group of values equivalent mod B.</p>
   </div>
   <br>

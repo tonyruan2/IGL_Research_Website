@@ -114,7 +114,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials):
         data_cds = ColumnDataSource(data)
 
         color = generate_color(periodicity_num, count)
-        model.circle(x='trial_count',
+        r = model.circle(x='trial_count',
                     y='probability',
                     source=data_cds,
                     size=10,
@@ -170,9 +170,9 @@ def modelpage():
     num_trials = request.args.get('number_of_trials')
 
     if process_prob == None or desired_numer == None or desired_denom == None or num_trials == None:
-        process_prob = 0.5
+        process_prob = 0.04
         desired_numer = 1
-        desired_denom = 2
+        desired_denom = 25
         num_trials = 100
 
     model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials));
