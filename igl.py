@@ -77,7 +77,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials):
 
     title = 'Probability Model'
 
-    model = figure(plot_width=940,
+    model = figure(plot_width=856,
                   plot_height=660,
                   x_range=(0, num_trials + 3),
                   y_range=(0, 1.03),

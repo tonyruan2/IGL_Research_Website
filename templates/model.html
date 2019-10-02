@@ -18,26 +18,27 @@ Monotonicty vs Periodicity
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col-md-2 jumbotron" style="background-color:lightblue">
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 jumbotron" style="background-color:lightblue">
       <form action="/model">
       <strong>Process probability</strong> <input type="number" style="width: 5em;" name="process_probability" step="0.001" min="0" max="1" value={{ process_prob }}> <br>
       <br> <strong>Desired probability (A / B)</strong> <br>
       <input type="number" style="width: 5em;" name="desired_numerator" step="1" min="0" value="{{ desired_numer }}"> <br>
       <input type="number" style="width: 5em;" name="desired_denominator" step="1" min="1" value="{{ desired_denom }}"> <br> <br>
-      <strong>Max Trials</strong> <input type="number" style="width: 5em;" name="number_of_trials" step="1" min="10" max="100" value="{{ num_trials }}"> <br>
+      <strong>Max Trials</strong> <br> <input type="number" style="width: 5em;" name="number_of_trials" step="1" min="10" max="100" value="{{ num_trials }}"> <br>
       <br>
       <input type="submit" class="btn btn-success" value="Create">
       </form>
     </div>
 
-    <div class="container-fluid col-md-10">
+    <div class="container col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
       {{ script | safe }}
       {{ div | safe }}
     </div>
+    <br>
   </div>
 
   <br>
-  <div class="jumbotron">
+  <div class="row jumbotron">
     <h2>User Guide</h2>
     <p>Input valid numbers for the process probability, desired probability, and max trials.</p>
     <p>Click the create button to create a model.</p>
@@ -56,5 +57,6 @@ Monotonicty vs Periodicity
 <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-widgets-1.3.4.min.js"></script>
 <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-1.3.4.min.js"></script>
 <script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-tables-1.3.4.min.js"></script>
+<script src="https://kit.fontawesome.com/69fad60c5d.js" crossorigin="anonymous"></script>
 {{super()}}
 {% endblock %}

@@ -9,5 +9,143 @@ Monotonicty vs Periodicity
 {% endblock %}
 
 {% block content %}
-  <h1>About</h1>
+<div class="container">
+  <h1 class="page-header">Organization</h1>
+  <div class="container" style="font-size:18px;">
+    <p>The Illinois Geometry Lab provides opportunities for mathematical research to undergraduate students attending the University of Illinois at Urbana-Champaign.</p>
+    <p>Undergraduate students work in groups of 3 to 5 and are guided by graduate mentors and a faculty member.</p>
+    <p>In the fall of 2019, over 50 undergraduate students worked on projects as a part of the Illinois Geometry Lab.</p>
+    <p>Learn more about the organization <a href="https://math.illinois.edu/research/igl">here</a>.</p>
+  </div>
+
+  <h1 class="page-header">Team</h1>
+  <div class="row text-center padding">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="static/img/tony_card.png">
+        <div class="card-body">
+            <h4 class="card-title">Tony Ruan</h4>
+            <p class="card-text">Tony is a sophomore studying computer science. <br> He created this website.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="static/img/user_card.png">
+        <div class="card-body">
+            <h4 class="card-title">Nathan Sell</h4>
+            <p class="card-text">Nathan is a senior studying mathematics.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="static/img/user_card.png">
+        <div class="card-body">
+            <h4 class="card-title">Gabby Digan</h4>
+            <p class="card-text">Gabby is a junior studying statistics and economics.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <br>
+  <div class="row text-center padding">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="static/img/user_card.png">
+        <div class="card-body">
+            <h4 class="card-title">Dingchen Sha</h4>
+            <p class="card-text">Dingchen is a junior studying statistics and economics.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="static/img/user_card.png">
+        <div class="card-body">
+            <h4 class="card-title">Jack Shao</h4>
+            <p class="card-text">Jack is a sophomore studying mathematics.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="static/img/user_card.png">
+        <div class="card-body">
+            <h4 class="card-title">Weihang Wang</h4>
+            <p class="card-text">Weihang is our graduate mentor.</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <br>
+  <div class="row text-center padding">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="card">
+        <img class="card-img-top" src="static/img/user_card.png">
+        <div class="card-body">
+            <h4 class="card-title">Professor DeVille</h4>
+            <p class="card-text">Professor DeVille is our faculty mentor.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <h1 class="page-header">Tools</h1>
+  <div class="row text-center padding">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <i class="fas fa-code fa-2x"></i>
+      <h3>HTML</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <i class="fab fa-css3 fa-2x"></i>
+      <h3>CSS</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <i class="fab fa-python fa-2x"></i>
+      <h3>Python</h3>
+    </div>
+  </div>
+
+  <br>
+  <div class="row text-center padding">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <img src="static/img/bootstrap.png" alt="" width="40" height="40">
+      <h3>Bootstrap</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <img src="static/img/bokeh.png" alt="" width="40" height="40">
+      <h3>Bokeh</h3>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <img src="static/img/flask.png" alt="" width="40" height="40">
+      <h3>Flask</h3>
+    </div>
+  </div>
+
+  <br>
+  <div class="row text-center padding">
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <i class="fab fa-font-awesome fa-2x"></i>
+      <h3>Font Awesome</h3>
+    </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js">
+</script>
+{{super()}}
 {% endblock %}
