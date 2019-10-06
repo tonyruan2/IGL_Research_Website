@@ -20,7 +20,7 @@ Monotonicty vs Periodicity
 <div class="container text-left">
   <div class="row">
     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 jumbotron" style="background-color:lightblue">
-      <h3>Input</h3>
+      <h4>Input</h4>
       <form action="/model">
 
         <strong>Process probability</strong>
@@ -34,8 +34,11 @@ Monotonicty vs Periodicity
         <input type="number" name="number_of_trials" step="1" min="10" max="100" value="{{ num_trials }}"> <br> <br>
 
         <strong>Highlight</strong> <br>
-        <input type="radio" name="highlight" value="monotonicity">Monotonicty<br>
-        <input type="radio" name="highlight" value="periodicity">Periodicity<br> <br>
+        <input type="radio" name="highlight" value="monotonicity"> Monotonicty<br>
+        <input type="radio" name="highlight" value="periodicity"> Periodicity<br> <br>
+
+        <strong>Lines</strong> <br>
+        <input type="radio" name="lines" value="include"> Include<br> <br>
 
       <input type="submit" class="btn btn-success" value="Create">
       </form>

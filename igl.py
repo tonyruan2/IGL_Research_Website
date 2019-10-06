@@ -78,7 +78,12 @@ def generate_color(periodicity_num, count, highlight):
     return color
 
 
-def create_model(process_prob, desired_numer, desired_denom, num_trials, highlight):
+def create_model(process_prob, desired_numer, desired_denom, num_trials, highlight, lines):
+
+    draw_lines = False
+    if lines == "include":
+        draw_lines = True
+
     desired_prob = float(desired_numer) / float(desired_denom)
 
     title = 'Probability Model'
@@ -124,11 +129,17 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
                 data_cds = ColumnDataSource(data)
 
                 color = generate_color(periodicity_num, count, "monotonicity")
-                r = model.circle(x='trial_count',
+                model.circle(x='trial_count',
                             y='probability',
                             source=data_cds,
                             size=10,
                             color=color)
+
+                if draw_lines:
+                    model.line(x='trial_count',
+                            y='probability',
+                            source=data_cds,
+                            line_width=2, line_color=color)
 
                 count += 1
 
@@ -164,11 +175,17 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
                 data_cds = ColumnDataSource(data)
 
                 color = generate_color(periodicity_num, count, "periodicity")
-                r = model.circle(x='trial_count',
+                model.circle(x='trial_count',
                             y='probability',
                             source=data_cds,
                             size=10,
                             color=color)
+
+                if draw_lines:
+                    model.line(x='trial_count',
+                            y='probability',
+                            source=data_cds,
+                            line_width=2, line_color=color)
 
                 count += 1
 
@@ -191,12 +208,19 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
             ]
 
             model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
-            
+
     else:
         data = {'trial_count': [x + 1 for x in range(num_trials)],
             'probability': compute_model(process_prob, desired_prob, num_trials)}
 
         data_cds = ColumnDataSource(data)
+
+        if draw_lines:
+            model.line(x='trial_count',
+                    y='probability',
+                    source=data_cds,
+                    line_width=2, line_color='blue')
+
         model.circle(x='trial_count',
                 y='probability',
                 source=data_cds,
@@ -252,6 +276,7 @@ def modelpage():
     desired_denom = request.args.get("desired_denominator")
     num_trials = request.args.get('number_of_trials')
     highlight = request.args.get('highlight')
+    lines = request.args.get('lines')
 
     if process_prob == None or desired_numer == None or desired_denom == None or num_trials == None:
         process_prob = 0.250
@@ -259,7 +284,7 @@ def modelpage():
         desired_denom = 11
         num_trials = 100
 
-    model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials), str(highlight));
+    model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials), str(highlight), str(lines));
     script, div = components(model)
     return render_template('model.html', script=script, div=div, process_prob=process_prob, desired_numer=desired_numer, desired_denom=desired_denom, num_trials=num_trials)
 
