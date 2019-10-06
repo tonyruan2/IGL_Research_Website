@@ -3,10 +3,11 @@ input[type=number] {
   height: 50px;
   font-size: 20px;
   padding: 5px;
+  margin-left: auto;
+  maegin-right: auto;
 }
 
 input[type=number]:focus {
-  background-color:: green;
   border: 3px solid #555;
 }
 
