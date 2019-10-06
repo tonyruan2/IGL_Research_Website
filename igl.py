@@ -63,11 +63,11 @@ def compute_model(process_prob, min_success_rate, num_trials):
 def generate_color(periodicity_num, count, highlight):
     entries = ['#0000FF', '#800080', '#FF00FF', '#008000', '#00FFFF','#808000', '#FA8072', '#7DEE3A']
 
-    if highlight == "monotonicity":
+    if highlight == 'monotonicity':
         if periodicity_num < 8:
             return entries[count]
 
-    if highlight == "periodicity":
+    if highlight == 'periodicity':
         if count < 8:
             return entries[count]
 
@@ -81,12 +81,21 @@ def generate_color(periodicity_num, count, highlight):
 def create_model(process_prob, desired_numer, desired_denom, num_trials, highlight, lines):
 
     draw_lines = False
-    if lines == "include":
+    if lines == 'include':
         draw_lines = True
 
     desired_prob = float(desired_numer) / float(desired_denom)
 
     title = 'Probability Model'
+    if highlight == 'monotonicity' or highlight == 'periodicity':
+        title = title + ' (' + highlight
+        if lines == 'include':
+            title += ', ' + 'lines drawn)'
+        else:
+            title += ')'
+    else:
+        if lines == 'include':
+            title = title + ' (lines drawn)'
 
     model = figure(plot_width=856,
                   plot_height=660,
@@ -110,7 +119,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
     model.yaxis.axis_label_text_font_size = '18pt'
     model.yaxis.major_label_text_font_size = '16pt'
 
-    if highlight == "monotonicity" or highlight == "periodicity":
+    if highlight == 'monotonicity' or highlight == 'periodicity':
 
         periodicity_num = desired_denom
         if (desired_denom % desired_numer == 0):
@@ -118,7 +127,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
         periodicity_num = int (periodicity_num)
 
-        if highlight == "monotonicity":
+        if highlight == 'monotonicity':
             count = 0
             while count < periodicity_num and count <= num_trials:
                 trials = [x for x in range(count, 101, periodicity_num) if x != 0 and x <= num_trials]
@@ -128,7 +137,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
                 data_cds = ColumnDataSource(data)
 
-                color = generate_color(periodicity_num, count, "monotonicity")
+                color = generate_color(periodicity_num, count, 'monotonicity')
                 model.circle(x='trial_count',
                             y='probability',
                             source=data_cds,
@@ -174,7 +183,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
                 data_cds = ColumnDataSource(data)
 
-                color = generate_color(periodicity_num, count, "periodicity")
+                color = generate_color(periodicity_num, count, 'periodicity')
                 model.circle(x='trial_count',
                             y='probability',
                             source=data_cds,
