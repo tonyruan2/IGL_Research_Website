@@ -70,7 +70,7 @@ def generate_color(periodicity_num, count, highlight):
     if highlight == "periodicity":
         if count < 8:
             return entries[count]
-            
+
     entries = ['0', '1', '2', '3', '4', '5', '6', '7', '8', 'A', 'B', 'C', 'D', 'E', 'F']
     color = '#'
     while len(color) < 7:
@@ -130,21 +130,28 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
                             size=10,
                             color=color)
 
-                hover_glyph = model.circle(x='trial_count',
-                                          y='probability',
-                                          source=data_cds,
-                                          size=15,
-                                          alpha=0,
-                                          hover_fill_color='orange',
-                                          hover_alpha=1)
-
-                tooltips = [
-                    ('Trial count', '@trial_count'),
-                    ('Probability', '@probability'),
-                ]
-
-                model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
                 count += 1
+
+
+            data = {'trial_count': [x + 1 for x in range(num_trials)],
+                'probability': compute_model(process_prob, desired_prob, num_trials)}
+
+            data_cds = ColumnDataSource(data)
+
+            hover_glyph = model.circle(x='trial_count',
+                                      y='probability',
+                                      source=data_cds,
+                                      size=15,
+                                      alpha=0,
+                                      hover_fill_color='orange',
+                                      hover_alpha=1)
+
+            tooltips = [
+                ('Trial count', '@trial_count'),
+                ('Probability', '@probability'),
+            ]
+
+            model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
 
         else:
             count = 0
@@ -163,21 +170,28 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
                             size=10,
                             color=color)
 
-                hover_glyph = model.circle(x='trial_count',
-                                          y='probability',
-                                          source=data_cds,
-                                          size=15,
-                                          alpha=0,
-                                          hover_fill_color='orange',
-                                          hover_alpha=1)
-
-                tooltips = [
-                    ('Trial count', '@trial_count'),
-                    ('Probability', '@probability'),
-                ]
-
-                model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
                 count += 1
+
+            data = {'trial_count': [x + 1 for x in range(num_trials)],
+                'probability': compute_model(process_prob, desired_prob, num_trials)}
+
+            data_cds = ColumnDataSource(data)
+
+            hover_glyph = model.circle(x='trial_count',
+                                      y='probability',
+                                      source=data_cds,
+                                      size=15,
+                                      alpha=0,
+                                      hover_fill_color='orange',
+                                      hover_alpha=1)
+
+            tooltips = [
+                ('Trial count', '@trial_count'),
+                ('Probability', '@probability'),
+            ]
+
+            model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
+            
     else:
         data = {'trial_count': [x + 1 for x in range(num_trials)],
             'probability': compute_model(process_prob, desired_prob, num_trials)}
@@ -240,9 +254,9 @@ def modelpage():
     highlight = request.args.get('highlight')
 
     if process_prob == None or desired_numer == None or desired_denom == None or num_trials == None:
-        process_prob = 0.040
-        desired_numer = 1
-        desired_denom = 25
+        process_prob = 0.250
+        desired_numer = 3
+        desired_denom = 11
         num_trials = 100
 
     model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials), str(highlight));
