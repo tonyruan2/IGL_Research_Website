@@ -4,7 +4,7 @@ input[type=number] {
   font-size: 20px;
   padding: 5px;
   margin-left: auto;
-  maegin-right: auto;
+  margin-right: auto;
 }
 
 input[type=number]:focus {
