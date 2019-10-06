@@ -60,11 +60,17 @@ def compute_model(process_prob, min_success_rate, num_trials):
         return [0 for x in range(num_trials)]
 
 
-def generate_color(periodicity_num, count):
-    if periodicity_num <= 8:
-        entries = ['#0000FF', '#800080', '#FF00FF', '#008000', '#00FFFF','#808000', '#FA8072', '#7DEE3A']
-        return entries[count]
+def generate_color(periodicity_num, count, highlight):
+    entries = ['#0000FF', '#800080', '#FF00FF', '#008000', '#00FFFF','#808000', '#FA8072', '#7DEE3A']
 
+    if highlight == "monotonicity":
+        if periodicity_num < 8:
+            return entries[count]
+
+    if highlight == "periodicity":
+        if count < 8:
+            return entries[count]
+            
     entries = ['0', '1', '2', '3', '4', '5', '6', '7', '8', 'A', 'B', 'C', 'D', 'E', 'F']
     color = '#'
     while len(color) < 7:
@@ -72,7 +78,7 @@ def generate_color(periodicity_num, count):
     return color
 
 
-def create_model(process_prob, desired_numer, desired_denom, num_trials):
+def create_model(process_prob, desired_numer, desired_denom, num_trials, highlight):
     desired_prob = float(desired_numer) / float(desired_denom)
 
     title = 'Probability Model'
@@ -99,26 +105,94 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials):
     model.yaxis.axis_label_text_font_size = '18pt'
     model.yaxis.major_label_text_font_size = '16pt'
 
-    periodicity_num = desired_denom
-    if (desired_denom % desired_numer == 0):
-        periodicity_num = desired_denom / desired_numer
+    if highlight == "monotonicity" or highlight == "periodicity":
 
-    periodicity_num = int (periodicity_num)
-    count = 0
-    while count < periodicity_num and count <= num_trials:
-        trials = [x for x in range(count, 101, periodicity_num) if x != 0 and x <= num_trials]
-        probabilities = [bernoulli_trial_sum(process_prob, math.ceil(desired_prob * current_trial_count), current_trial_count) for current_trial_count in trials]
-        data = {'trial_count': trials,
-                'probability': probabilities}
+        periodicity_num = desired_denom
+        if (desired_denom % desired_numer == 0):
+            periodicity_num = desired_denom / desired_numer
+
+        periodicity_num = int (periodicity_num)
+
+        if highlight == "monotonicity":
+            count = 0
+            while count < periodicity_num and count <= num_trials:
+                trials = [x for x in range(count, 101, periodicity_num) if x != 0 and x <= num_trials]
+                probabilities = [bernoulli_trial_sum(process_prob, math.ceil(desired_prob * current_trial_count), current_trial_count) for current_trial_count in trials]
+                data = {'trial_count': trials,
+                        'probability': probabilities}
+
+                data_cds = ColumnDataSource(data)
+
+                color = generate_color(periodicity_num, count, "monotonicity")
+                r = model.circle(x='trial_count',
+                            y='probability',
+                            source=data_cds,
+                            size=10,
+                            color=color)
+
+                hover_glyph = model.circle(x='trial_count',
+                                          y='probability',
+                                          source=data_cds,
+                                          size=15,
+                                          alpha=0,
+                                          hover_fill_color='orange',
+                                          hover_alpha=1)
+
+                tooltips = [
+                    ('Trial count', '@trial_count'),
+                    ('Probability', '@probability'),
+                ]
+
+                model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
+                count += 1
+
+        else:
+            count = 0
+            while (count * periodicity_num) + 1 <= num_trials:
+                trials = [x for x in range((count * periodicity_num) + 1, ((count + 1) * periodicity_num + 1)) if x != 0 and x <= num_trials]
+                probabilities = [bernoulli_trial_sum(process_prob, math.ceil(desired_prob * current_trial_count), current_trial_count) for current_trial_count in trials]
+                data = {'trial_count': trials,
+                        'probability': probabilities}
+
+                data_cds = ColumnDataSource(data)
+
+                color = generate_color(periodicity_num, count, "periodicity")
+                r = model.circle(x='trial_count',
+                            y='probability',
+                            source=data_cds,
+                            size=10,
+                            color=color)
+
+                hover_glyph = model.circle(x='trial_count',
+                                          y='probability',
+                                          source=data_cds,
+                                          size=15,
+                                          alpha=0,
+                                          hover_fill_color='orange',
+                                          hover_alpha=1)
+
+                tooltips = [
+                    ('Trial count', '@trial_count'),
+                    ('Probability', '@probability'),
+                ]
+
+                model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
+                count += 1
+    else:
+        data = {'trial_count': [x + 1 for x in range(num_trials)],
+            'probability': compute_model(process_prob, desired_prob, num_trials)}
 
         data_cds = ColumnDataSource(data)
+        model.circle(x='trial_count',
+                y='probability',
+                source=data_cds,
+                size=10,
+                color='blue')
 
-        color = generate_color(periodicity_num, count)
-        r = model.circle(x='trial_count',
-                    y='probability',
-                    source=data_cds,
-                    size=10,
-                    color=color)
+        tooltips = [
+            ('Trial count', '@trial_count'),
+            ('Probability', '@probability'),
+        ]
 
         hover_glyph = model.circle(x='trial_count',
                                   y='probability',
@@ -128,15 +202,10 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials):
                                   hover_fill_color='orange',
                                   hover_alpha=1)
 
-        tooltips = [
-            ('Trial count', '@trial_count'),
-            ('Probability', '@probability'),
-        ]
-
         model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
-        count += 1
 
     return model
+
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -168,14 +237,15 @@ def modelpage():
     desired_numer = request.args.get("desired_numerator")
     desired_denom = request.args.get("desired_denominator")
     num_trials = request.args.get('number_of_trials')
+    highlight = request.args.get('highlight')
 
     if process_prob == None or desired_numer == None or desired_denom == None or num_trials == None:
-        process_prob = 0.04
+        process_prob = 0.040
         desired_numer = 1
         desired_denom = 25
         num_trials = 100
 
-    model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials));
+    model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials), str(highlight));
     script, div = components(model)
     return render_template('model.html', script=script, div=div, process_prob=process_prob, desired_numer=desired_numer, desired_denom=desired_denom, num_trials=num_trials)
 
