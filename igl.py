@@ -64,7 +64,7 @@ def generate_color(periodicity_num, count, highlight):
     entries = ['#0000FF', '#800080', '#FF00FF', '#008000', '#00FFFF','#808000', '#FA8072', '#7DEE3A']
 
     if highlight == 'monotonicity':
-        if periodicity_num < 8:
+        if periodicity_num < 8 or count < 8:
             return entries[count]
 
     if highlight == 'periodicity':

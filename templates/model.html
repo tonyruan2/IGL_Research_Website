@@ -54,14 +54,16 @@ Monotonicty vs Periodicity
   <br>
   <div class="row jumbotron">
     <h2>User Guide</h2>
-    <p>Input valid numbers for the process probability, desired probability, and max trials.</p>
-    <p>Click the create button to create a model.</p>
-    <p>Use the tools provided to pan, zoom, reset, save, and hover.</p>
+    <p>1) Input valid numbers for the process probability [0 to 1, with increments of 0.001], desired probability [A and B are integers], and max trials [10 to 100].</p>
+    <p>2) Select to highlight monotonicity or periodicity if desired.</p>
+    <p>3) Select to draw helper lines if desired.</p>
+    <p>4) Click the create button to create a model.</p>
+    <p>5) Use the tools provided to [1] pan the graph, [2] zoom in and out, [3] reset the graph to its default state, [4] save the graph, and [5] hover over data points.</p>
     <hr>
     <h2>Model Information</h2>
     <p>This model shows the probability of achieving at least the desired probability with a certain trial count.</p>
-    <p>The points on the graph are colored according to their trial count mod B, where (A / B) is the desired probability in simplest terms. Points with trial counts that are equivalent mod B have the same color.</p>
-    <p>When B is less than or equal to 8, preset colors are used. Otherwise, random colors are generated for each group of values equivalent mod B.</p>
+    <p>When monotonicity is selected, the points on the graph are colored according to their trial count mod B, where A divided by B is the desired probability in simplest terms. Points with trial counts that are equivalent mod B have the same color. Preset colors are used for the first 8 groups of values equivalent mod B. Afterwards, random colors are generated for each group of values equivalent mod B.</p>
+    <p>When periodicity is selected, every B trials are colored the same color. Similar to the highlighting when monotonicity is selected, the first eight groups have the same color. Afterwards, random colors are generated.</p>
   </div>
   <br>
 </div>
