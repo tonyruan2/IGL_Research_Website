@@ -60,6 +60,14 @@ def compute_model(process_prob, min_success_rate, num_trials):
         return [0 for x in range(num_trials)]
 
 
+def gcd(a, b):
+    while (b != 0):
+        tmp = b
+        b = a % b
+        a = tmp
+    return a
+
+
 def generate_color(periodicity_num, count, highlight):
     entries = ['#0000FF', '#800080', '#FF00FF', '#008000', '#00FFFF','#808000', '#FA8072', '#7DEE3A']
 
@@ -121,11 +129,8 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
     if highlight == 'monotonicity' or highlight == 'periodicity':
 
-        periodicity_num = desired_denom
-        if (desired_denom % desired_numer == 0):
-            periodicity_num = desired_denom / desired_numer
-
-        periodicity_num = int (periodicity_num)
+        periodicity_num = int(desired_denom) / int(gcd(int(desired_numer), int(desired_denom)))
+        periodicity_num = int(periodicity_num)
 
         if highlight == 'monotonicity':
             count = 0
@@ -176,7 +181,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
         else:
             count = 0
             while (count * periodicity_num) + 1 <= num_trials:
-                trials = [x for x in range((count * periodicity_num) + 1, ((count + 1) * periodicity_num + 1)) if x != 0 and x <= num_trials]
+                trials = [x for x in range((count * periodicity_num), ((count + 1) * periodicity_num)) if x != 0 and x <= num_trials]
                 probabilities = [bernoulli_trial_sum(process_prob, math.ceil(desired_prob * current_trial_count), current_trial_count) for current_trial_count in trials]
                 data = {'trial_count': trials,
                         'probability': probabilities}
