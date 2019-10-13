@@ -10,6 +10,7 @@ from bokeh.models import Legend
 import math
 import random
 
+
 def factorial(num):
     f = 1
     while num > 0:
@@ -25,6 +26,8 @@ def permutation(n, k):
 
 
 def combination(n, k):
+    if k == 0 or n == k:
+        return 1
     return permutation(n, k) / factorial(k)
 
 
@@ -39,19 +42,19 @@ def bernoulli_trial(success_probability, desired_successes, num_trials):
 
 def bernoulli_trial_sum(success_probability, min_successes, num_trials):
     probability_sum = 0
-    desired_successes = min_successes
+    desired_successes = int(min_successes)
     while desired_successes <= num_trials:
         probability_sum += bernoulli_trial(success_probability, desired_successes, num_trials)
         desired_successes += 1
     return probability_sum
 
 
-def compute_model(process_prob, min_success_rate, num_trials):
+def compute_model(process_prob, desired_numer, desired_denom, num_trials):
     try:
         current_trial_count = 1
         results = []
         while current_trial_count <= num_trials:
-            min_successes = math.ceil(min_success_rate * current_trial_count)
+            min_successes = math.ceil((desired_numer * current_trial_count) / desired_denom)
             long_term_prob = bernoulli_trial_sum(process_prob, min_successes, current_trial_count)
             results.append(long_term_prob)
             current_trial_count += 1
@@ -91,8 +94,6 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
     draw_lines = False
     if lines == 'include':
         draw_lines = True
-
-    desired_prob = float(desired_numer) / float(desired_denom)
 
     title = 'Probability Model'
     if highlight == 'monotonicity' or highlight == 'periodicity':
@@ -135,8 +136,8 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
         if highlight == 'monotonicity':
             count = 0
             while count < periodicity_num and count <= num_trials:
-                trials = [x for x in range(count, 101, periodicity_num) if x != 0 and x <= num_trials]
-                probabilities = [bernoulli_trial_sum(process_prob, math.ceil(desired_prob * current_trial_count), current_trial_count) for current_trial_count in trials]
+                trials = [x for x in range(count, num_trials, periodicity_num) if x != 0 and x <= num_trials]
+                probabilities = [bernoulli_trial_sum(process_prob, math.ceil((desired_numer * current_trial_count) / desired_denom), current_trial_count) for current_trial_count in trials]
                 data = {'trial_count': trials,
                         'probability': probabilities}
 
@@ -159,7 +160,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
 
             data = {'trial_count': [x + 1 for x in range(num_trials)],
-                'probability': compute_model(process_prob, desired_prob, num_trials)}
+                'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials)}
 
             data_cds = ColumnDataSource(data)
 
@@ -182,7 +183,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
             count = 0
             while (count * periodicity_num) + 1 <= num_trials:
                 trials = [x for x in range((count * periodicity_num), ((count + 1) * periodicity_num)) if x != 0 and x <= num_trials]
-                probabilities = [bernoulli_trial_sum(process_prob, math.ceil(desired_prob * current_trial_count), current_trial_count) for current_trial_count in trials]
+                probabilities = [bernoulli_trial_sum(process_prob, math.ceil((desired_numer * current_trial_count) / desired_denom), current_trial_count) for current_trial_count in trials]
                 data = {'trial_count': trials,
                         'probability': probabilities}
 
@@ -204,7 +205,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
                 count += 1
 
             data = {'trial_count': [x + 1 for x in range(num_trials)],
-                'probability': compute_model(process_prob, desired_prob, num_trials)}
+                'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials)}
 
             data_cds = ColumnDataSource(data)
 
@@ -225,7 +226,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
     else:
         data = {'trial_count': [x + 1 for x in range(num_trials)],
-            'probability': compute_model(process_prob, desired_prob, num_trials)}
+            'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials)}
 
         data_cds = ColumnDataSource(data)
 
