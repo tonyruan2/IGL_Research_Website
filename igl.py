@@ -9,26 +9,7 @@ from bokeh.models import HoverTool
 from bokeh.models import Legend
 import math
 import random
-
-
-def factorial(num):
-    f = 1
-    while num > 0:
-        f *= num
-        num -= 1
-    return f
-
-
-def permutation(n, k):
-    if k > n or n < 0 or k < 0:
-        raise ValueError
-    return factorial(n) / factorial(n - k)
-
-
-def combination(n, k):
-    if k == 0 or n == k:
-        return 1
-    return permutation(n, k) / factorial(k)
+from scipy.special import comb
 
 
 def bernoulli_trial(success_probability, desired_successes, num_trials):
@@ -36,7 +17,7 @@ def bernoulli_trial(success_probability, desired_successes, num_trials):
         raise ValueError
     failure_probability = 1 - success_probability
     desired_failures = num_trials - desired_successes
-    return combination(num_trials, desired_successes) * (success_probability ** desired_successes) * (
+    return comb(num_trials, desired_successes) * (success_probability ** desired_successes) * (
             failure_probability ** desired_failures)
 
 
@@ -108,8 +89,8 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
     model = figure(plot_width=856,
                   plot_height=660,
-                  x_range=(0, num_trials + 3),
-                  y_range=(0, 1.03),
+                  x_range=(0, num_trials + (num_trials / 10)),
+                  y_range=(0, 1.10),
                   x_axis_label='Trial count',
                   y_axis_label='Probability to achieve desired success',
                   title=title, tools='pan, wheel_zoom, reset, save',
@@ -297,7 +278,7 @@ def modelpage():
         process_prob = 0.250
         desired_numer = 3
         desired_denom = 11
-        num_trials = 100
+        num_trials = 147
 
     model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials), str(highlight), str(lines));
     script, div = components(model)

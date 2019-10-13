@@ -31,7 +31,7 @@ Monotonicty vs Periodicity
         <input type="number" name="desired_denominator" step="1" min="1" value="{{ desired_denom }}"> <br> <br>
 
         <strong>Max Trials</strong> <br>
-        <input type="number" name="number_of_trials" step="1" min="10" max="110" value="{{ num_trials }}"> <br> <br>
+        <input type="number" name="number_of_trials" step="1" min="10" max="1000" value="{{ num_trials }}"> <br> <br>
 
         <strong>Highlight</strong> <br>
         <input type="radio" name="highlight" value="monotonicity"> Monotonicty<br>
@@ -54,7 +54,7 @@ Monotonicty vs Periodicity
   <br>
   <div class="row jumbotron">
     <h2>User Guide</h2>
-    <p>1) Input valid numbers for the process probability [0 to 1, with increments of 0.001], desired probability [A and B are integers], and max trials [10 to 100].</p>
+    <p>1) Input valid numbers for the process probability [0 to 1, with increments of 0.001], desired probability [A and B are integers], and max trials [10 to <strong>1000</strong>]. Larger max trial values may cause model generation to take slightly more time.</p>
     <p>2) Select to highlight monotonicity or periodicity if desired.</p>
     <p>3) Select to draw helper lines if desired.</p>
     <p>4) Click the create button to create a model.</p>
