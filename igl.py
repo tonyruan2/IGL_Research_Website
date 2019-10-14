@@ -163,7 +163,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
         else:
             count = 0
             while (count * periodicity_num) + 1 <= num_trials:
-                trials = [x for x in range((count * periodicity_num), ((count + 1) * periodicity_num)) if x != 0 and x <= num_trials]
+                trials = [x for x in range((count * periodicity_num) + 1, ((count + 1) * periodicity_num) + 1) if x != 0 and x <= num_trials]
                 probabilities = [bernoulli_trial_sum(process_prob, math.ceil((desired_numer * current_trial_count) / desired_denom), current_trial_count) for current_trial_count in trials]
                 data = {'trial_count': trials,
                         'probability': probabilities}
