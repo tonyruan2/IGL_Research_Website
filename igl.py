@@ -77,15 +77,18 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
         draw_lines = True
 
     title = 'Probability Model'
-    if highlight == 'monotonicity' or highlight == 'periodicity':
-        title = title + ' (' + highlight
+    if highlight == 'monotonicity' or highlight == 'periodicity0' or highlight == 'periodicity1':
+        if highlight == 'monotonicity':
+            title += ' (' + highlight
+        else:
+            title += ' (' + 'periodicity'
         if lines == 'include':
             title += ', ' + 'lines drawn)'
         else:
             title += ')'
     else:
         if lines == 'include':
-            title = title + ' (lines drawn)'
+            title += ' (lines drawn)'
 
     model = figure(plot_width=856,
                   plot_height=660,
@@ -109,7 +112,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
     model.yaxis.axis_label_text_font_size = '18pt'
     model.yaxis.major_label_text_font_size = '16pt'
 
-    if highlight == 'monotonicity' or highlight == 'periodicity':
+    if highlight == 'monotonicity' or highlight == 'periodicity0' or highlight == 'periodicity1':
 
         periodicity_num = int(desired_denom) / int(gcd(int(desired_numer), int(desired_denom)))
         periodicity_num = int(periodicity_num)
@@ -163,7 +166,11 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
         else:
             count = 0
             while (count * periodicity_num) + 1 <= num_trials:
-                trials = [x for x in range((count * periodicity_num) + 1, ((count + 1) * periodicity_num) + 1) if x != 0 and x <= num_trials]
+                trials = []
+                if highlight == 'periodicity0':
+                    trials = [x for x in range((count * periodicity_num), ((count + 1) * periodicity_num)) if x != 0 and x <= num_trials]
+                else:
+                    trials = [x for x in range((count * periodicity_num) + 1, ((count + 1) * periodicity_num) + 1) if x != 0 and x <= num_trials]
                 probabilities = [bernoulli_trial_sum(process_prob, math.ceil((desired_numer * current_trial_count) / desired_denom), current_trial_count) for current_trial_count in trials]
                 data = {'trial_count': trials,
                         'probability': probabilities}

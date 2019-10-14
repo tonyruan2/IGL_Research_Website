@@ -35,7 +35,8 @@ Monotonicty vs Periodicity
 
         <strong>Highlight</strong> <br>
         <input type="radio" name="highlight" value="monotonicity"> Monotonicty<br>
-        <input type="radio" name="highlight" value="periodicity"> Periodicity<br> <br>
+        <input type="radio" name="highlight" value="periodicity0"> Periodicity [0]<br>
+        <input type="radio" name="highlight" value="periodicity1"> Periodicity [1]<br> <br>
 
         <strong>Lines</strong> <br>
         <input type="radio" name="lines" value="include"> Include<br> <br>
@@ -63,7 +64,7 @@ Monotonicty vs Periodicity
     <h2>Model Information</h2>
     <p>This model shows the probability of achieving at least the desired probability with a certain trial count.</p>
     <p>When monotonicity is selected, the points on the graph are colored according to their trial count mod B, where A divided by B is the desired probability in simplest terms. Points with trial counts that are equivalent mod B have the same color. Preset colors are used for the first 8 groups of values equivalent mod B. Afterwards, random colors are generated for each group of values equivalent mod B.</p>
-    <p>When periodicity is selected, every B trials (starting from and implicitly including 0) are colored the same color. Similar to the highlighting when monotonicity is selected, the first eight groups have the same color. Afterwards, random colors are generated.</p>
+    <p>When periodicity is selected, every B trials are colored the same color. For the "Periodicity [0]" option, counting starts implicitly from 0. For the "Periodicity [1]" option, counting starts from 1. Choose the option that grants a greater pattern clarity. Similar to the highlighting when monotonicity is selected, the first eight groups have the same color. Afterwards, random colors are generated.</p>
   </div>
   <br>
 </div>
