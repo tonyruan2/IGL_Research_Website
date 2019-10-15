@@ -12,17 +12,23 @@
   font-size: 60px;
 }
 
+#overview {
+  box-sizing: content-box;
+  padding: 30px;
+  border: 2px solid;
+  border-radius: 5px;
+  border-color: #fff;
+  font-size: 16px;
+}
+
 body {
   background: rgb(55,193,182);
   background: linear-gradient(63deg, rgba(55,193,182,1) 0%, rgba(224,206,101,1) 100%);
 }
 
-#heading-blob {
-  background-color: lightblue;
-}
-
-.margin-bottom-20 {
-  margin-bottom: 20px;
+.carousel-container {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .carousel-inner {
