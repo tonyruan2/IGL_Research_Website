@@ -10,9 +10,8 @@
 
 #overview {
   box-sizing: content-box;
-  padding: 0px 30px 30px 30px;
   border: 2px solid;
-  border-radius: 5px;
+  border-radius: 15px;
   border-color: #fff;
   font-size: 16px;
 }
