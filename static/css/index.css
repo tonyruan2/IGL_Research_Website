@@ -2,6 +2,21 @@
   margin-bottom: 0;
 }
 
+.container {
+  margin-top: 50px;
+  margin-bottom: 50px
+}
+
+.title {
+  font-family: 'Francois One', serif;
+  font-size: 60px;
+}
+
+body {
+  background: rgb(55,193,182);
+  background: linear-gradient(63deg, rgba(55,193,182,1) 0%, rgba(224,206,101,1) 100%);
+}
+
 #heading-blob {
   background-color: lightblue;
 }
@@ -16,5 +31,7 @@
 }
 
 .carousel-inner > .item > img{
+  width: 856px;
+  height: 660px;
   margin:auto;
 }

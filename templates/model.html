@@ -46,8 +46,10 @@ Monotonicty vs Periodicity
     </div>
 
     <div class="container col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
-      {{ script | safe }}
-      {{ div | safe }}
+      <div class="model-container">
+        {{ script | safe }}
+        {{ div | safe }}
+      </div>
     </div>
     <br>
   </div>
@@ -66,7 +68,6 @@ Monotonicty vs Periodicity
     <p>When monotonicity is selected, the points on the graph are colored according to their trial count mod B, where A divided by B is the desired probability in simplest terms. Points with trial counts that are equivalent mod B have the same color. Preset colors are used for the first 8 groups of values equivalent mod B. Afterwards, random colors are generated for each group of values equivalent mod B.</p>
     <p>When periodicity is selected, every B trials are colored the same color. For the "Periodicity [0]" option, counting starts implicitly from 0. For the "Periodicity [1]" option, counting starts from 1. Choose the option that grants a greater pattern clarity. Similar to the highlighting when monotonicity is selected, the first eight groups have the same color. Afterwards, random colors are generated.</p>
   </div>
-  <br>
 </div>
 {% endblock %}
 

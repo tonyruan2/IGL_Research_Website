@@ -8,6 +8,11 @@ Monotonicty vs Periodicity
 {{ nav.nav_bar.render() }}
 {% endblock %}
 
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="static/css/about.css">
+{% endblock %}
+
 {% block content %}
 <div class="container">
   <h1 class="page-header"><strong>Organization</strong></h1>

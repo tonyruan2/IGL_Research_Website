@@ -6,7 +6,7 @@ Monotonicty vs Periodicity
 
 {% block styles %}
 {{super()}}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+<link rel="stylesheet" type="text/css" href="static/css/index.css">
 <link rel="stylesheet"
   href="https://fonts.googleapis.com/css?family=Francois+One">
 {% endblock %}
@@ -16,16 +16,13 @@ Monotonicty vs Periodicity
 {% endblock %}
 
 {% block content %}
-
-<div id="heading-blob" class="jumbotron text-center">
-  <div style="font-family: 'Francois One', serif;" class="container">
-    <h1>Monotonicty vs Periodicity</h1>
-    <h2>in the</h2>
-    <h2>Law of Large Numbers</h2>
-  </div>
-</div>
-
 <div class="container">
+  <div class="text-center">
+    <h1 class="title">Monotonicty vs Periodicity</h1>
+    <h1>in the</h1>
+    <h1>Law of Large Numbers</h1>
+  </div>
+
   <div id="overview" class="col-md-12"">
     <h1 class="page-header"><strong>Project Overview</strong></h1>
 
@@ -42,16 +39,14 @@ Monotonicty vs Periodicity
       </ul>
       <hr>
       <p>But suppose we cannot run the process a large amount of times. That is, suppose the process is costly to run and requires a substantial amount of resources.</p>
-      <p>Let’s limit the number of trials N to a positive integer T, which is less than or equal to 100. In other words, assume we have the resources to run between 1 and T trials.</p>
+      <p>Let’s limit the number of trials N to a positive integer T, which is less than or equal to 1000. In other words, assume we have the resources to run between 1 and T trials.</p>
       <p>Then what should we choose N to be to maximize our probability to achieve our desired probability? Alternatively, what should we choose N to be to minimize our probability to achieve our desired probability?</p>
       <hr>
-      <p>It turns out that there is a certain periodic behavior in the short run. To elaborate, as N increases, the probability to achieve our desired probability appears to converge to the long-run monotone behavior in a periodic manner.</p>
-      <p>The goal of our project is to investigate the monotonicity and periodicity present in the mathematical scenario described.</p>
+      <p>It turns out that there are certain monotonic and periodic behaviors related to the trial count and the probability to achieve our desired probability.</p>
+      <p>The goal of our project is to investigate these monotonic and periodic behaviors in the mathematical scenario described.</p>
     </div>
-    <br>
-    <br>
 
-    <div class="container text-center">
+    <div class="text-center">
       <div class="row">
         <div class="col-sm-12">
 
@@ -103,7 +98,5 @@ Monotonicty vs Periodicity
   </div>
 
 </div>
-
-<div class="margin-bottom-20"></div>
 
 {% endblock %}

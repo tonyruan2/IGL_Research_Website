@@ -1,3 +1,12 @@
+.container {
+  margin-bottom: 50px;
+}
+
+body {
+  background: rgb(55,193,182);
+  background: linear-gradient(63deg, rgba(55,193,182,1) 0%, rgba(224,206,101,1) 100%);
+}
+
 input[type=number] {
   width: 80px;
   height: 50px;
@@ -14,4 +23,9 @@ input[type=number]:focus {
 input[type=radio] {
   margin-top: -1px;
   vertical-align: middle;
+}
+
+.model-container {
+  width: 856px;
+  height: 649px;
 }

@@ -91,7 +91,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
             title += ' (lines drawn)'
 
     model = figure(plot_width=856,
-                  plot_height=660,
+                  plot_height=649,
                   x_range=(0, num_trials + (num_trials / 10)),
                   y_range=(0, 1.10),
                   x_axis_label='Trial count',
