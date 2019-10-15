@@ -90,7 +90,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
         if lines == 'include':
             title += ' (lines drawn)'
 
-    model = figure(plot_width=856,
+    model = figure(plot_width=863,
                   plot_height=649,
                   x_range=(0, num_trials + (num_trials / 10)),
                   y_range=(0, 1.10),
