@@ -1,8 +1,28 @@
 .container {
   margin-bottom: 50px;
+  height: 100vh;
 }
 
 body {
   background: rgb(55,193,182);
   background: linear-gradient(63deg, rgba(55,193,182,1) 0%, rgba(224,206,101,1) 100%);
+}
+
+#findings {
+  margin-bottom: 50px;
+}
+
+.example {
+  height: 540;
+  width: 970;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+p {
+  font-size: 18px;
+}
+
+li {
+  font-size: 18px;
 }

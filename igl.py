@@ -120,7 +120,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
         if highlight == 'monotonicity':
             count = 0
             while count < periodicity_num and count <= num_trials:
-                trials = [x for x in range(count, num_trials, periodicity_num) if x != 0 and x <= num_trials]
+                trials = [x for x in range(count, num_trials + 1, periodicity_num) if x != 0 and x <= num_trials]
                 probabilities = [bernoulli_trial_sum(process_prob, math.ceil((desired_numer * current_trial_count) / desired_denom), current_trial_count) for current_trial_count in trials]
                 data = {'trial_count': trials,
                         'probability': probabilities}
@@ -142,9 +142,10 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
                 count += 1
 
-
-            data = {'trial_count': [x + 1 for x in range(num_trials)],
-                'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials)}
+            trials = [x + 1 for x in range(num_trials)]
+            data = {'trial_count': trials,
+                'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials),
+                'mod': [(x % periodicity_num) for x in trials]}
 
             data_cds = ColumnDataSource(data)
 
@@ -159,6 +160,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
             tooltips = [
                 ('Trial count', '@trial_count'),
                 ('Probability', '@probability'),
+                ('Mod ' + str(periodicity_num), '@mod')
             ]
 
             model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))

@@ -16,28 +16,129 @@ Monotonicty vs Periodicity
 {% block content %}
 <div class="container">
   <div id="findings" class="col-md-12">
-    <h1 class="page-header"><strong>Findings (In progress)</strong></h1>
-    <div id="findings_1">
-      <h2>1</h2>
+    <h1 class="page-header"><strong>Findings</strong></h1>
+
+    <a class="btn btn-primary" data-toggle="collapse" href="#finding_1" role="button" aria-expanded="false" aria-controls="finding_1">Finding 1</a>
+    <div class="collapse" id="finding_1">
       <h3>Observation</h3>
+      <p>In the long run, there is a certain overall trend in the probability to achieve at least the desired probability.</p>
+      <img class="example" src="static/img/finding_1_1.png"></img>
+
       <h3>Conjecture</h3>
+      <p>In the long run, there are three general behaviors:</p>
+      <ul>
+        <li>If our process probability is less than our desired probability, the resulting probabilities converge to 0 and the overall trend is decreasing.</li>
+        <li>If our process probability is equal to our desired probability, the resulting probabilities converge to 0.5 and the overall trend is increasing below 0.5 and decreasing above 0.5.</li>
+        <li>If our process probability is greater than our desired probability, the resulting probabilities converge to 1 and the overall trend is increasing.</li>
+      </ul>
+
       <h3>Investigation</h3>
-    </div>
-    <hr>
-    <div id="findings_2">
-      <h2>2</h2>
-      <h3>Observation</h3>
-      <h3>Conjecture</h3>
-      <h3>Investigation</h3>
-    </div>
-    <hr>
-    <div id="findings_3">
-      <h2>3</h2>
-      <h3>Observation</h3>
-      <h3>Conjecture</h3>
-      <h3>Investigation</h3>
+      <p>This conjecture is true by the Law of Large Numbers.</p>
+
+      <img class="example" src="static/img/finding_1_2.png"></img>
+      <img class="example" src="static/img/finding_1_3.png"></img>
+      <img class="example" src="static/img/finding_1_4.png"></img>
+
+      <img class="example" src="static/img/finding_1_5.png"></img>
+      <img class="example" src="static/img/finding_1_6.png"></img>
+      <img class="example" src="static/img/finding_1_7.png"></img>
+
+      <h3>Significance</h3>
+      <p>We can use the long run behavior to estimate the optimal trial counts for the maximum and minimum probabilities of success.</p>
+      <p>If the long run behavior is decreasing, we can hypothetize that smaller trial counts will offer greater probabilities of success than larger trial counts.</p>
+      <p>If the long run behavior is increasing, we can hypothetize that larger trial counts will offer greater probabilities of success than smaller trial counts.</p>
+      <p>If the long run behavior is a convergence to 0.5, we can hypothetize that some small trial count will offer the optimal probability of success.</p>
     </div>
 
+    <hr>
+
+    <a class="btn btn-primary" data-toggle="collapse" href="#finding_2" role="button" aria-expanded="false" aria-controls="finding_2">Finding 2</a>
+    <div class="collapse" id="finding_2">
+      <h3>Observation</h3>
+      <p>There appears to be distinct ‘lines’ of trial counts in which the probability to achieve at least the desired probability converges in a monotone manner.</p>
+      <img class="example" src="static/img/finding_2_1.png">
+
+      <h3>Conjecture</h3>
+      <p>For all trial counts equivalent mod B, the probability to achieve at least the desired probability has a monotonic behavior.</p>
+      <img class="example" src="static/img/finding_2_2.png">
+
+      <h3>Investigation</h3>
+      <p>This conjecture is false.</p>
+      <img class="example" src="static/img/finding_2_3.png">
+      <p>As seen in the image, there is an initial decrease in probability followed by an increase in probability for both the blue and purple groups of trial counts. This means the behavior is not monotone.</p>
+
+      <h3>Revised Conjecture</h3>
+      <p>For all trial counts equivalent mod B, the probability to achieve at least the desired probability has a monotonic behavior for a trial count n that is greater than or equal to k, where k is a sufficiently large positive integer. </p>
+      <p>In other words, there is always monotonic long run behavior (but not short run behavior) for the probabilities of trial counts equivalent mod B.</p>
+
+      <img class="example" src="static/img/finding_2_4.png">
+      <p>Here, if we pick an integer k and set it equal to 20, we see that the probabilities of each equivalent mod group are monotonically increasing for trial counts greater than or equal to k.</p>
+      <img class="example" src="static/img/finding_2_5.png">
+      <p>Here, if we pick an integer k and set it equal to 30, we see that the probabilities of each equivalent mod group are monotonically decreasing for trial counts greater than or equal to k.</p>
+
+      <h3>Significance</h3>
+      <p>We can use the long run relationship in each mod equivalent group to further hypothesize which trial counts are optimal for the maximum and minimum probabilities of success.</p>
+    </div>
+
+    <hr>
+
+    <a class="btn btn-primary" data-toggle="collapse" href="#finding_3" role="button" aria-expanded="false" aria-controls="finding_3">Finding 3</a>
+    <div class="collapse" id="finding_3">
+      <h3>Observation</h3>
+      <p>Connecting the probabilities of trial counts equivalent mod B shows the greatest line of probabilities consists of the trial counts equal to 0 mod B. In other words, multiples of B appear to have the greatest probabilities.</p>
+      <img class="example" src="static/img/finding_3_1.png">
+
+      <h3>Conjecture</h3>
+      <p>For trial counts in [wB, (w+1)B], where w is a positive integer, the trial count with the maximum probability is:</p>
+      <ul>
+        <li>wB if the overall trend is decreasing or both decreasing and increasing (process < desired OR process == desired)</li>
+        <li>(w+1)B if the overall trend is increasing (process > desired)</li>
+      </ul>
+
+      <h3>Investigation</h3>
+      <p>This conjecture is true. Note that the conjecture does not hold if w = 0. This is because a trial count of 0 is trivial.</p>
+      <img class="example" src="static/img/finding_3_2.png">
+      <img class="example" src="static/img/finding_3_3.png">
+      <img class="example" src="static/img/finding_3_4.png">
+
+      <h3>Significance</h3>
+      <p>We’ve found a way to find the trial count that provides the maximum probability of success for a range [wB, (w+1)B].</p>
+    </div>
+
+    <hr>
+
+    <a class="btn btn-primary" data-toggle="collapse" href="#finding_4" role="button" aria-expanded="false" aria-controls="finding_4">Finding 4</a>
+    <div class="collapse" id="finding_4">
+      <h3>Observation</h3>
+      <p>There appears to be a repeating pattern in the probabilities for each consecutive group of B trials.</p>
+
+      <h3>Conjecture</h3>
+      <p>Every B trials, counting implicitly from 0 or explicitly from 1, the probabilities exhibit a periodic behavior.</p>
+
+      <h3>Investigation</h3>
+      <p>This conjecture is true.</p>
+      <img class="example" src="static/img/finding_4_1.png">
+      <img class="example" src="static/img/finding_4_2.png">
+      <img class="example" src="static/img/finding_4_3.png">
+
+      <h3>Significance</h3>
+      <p>We can use the pattern of the first or second group of B trials to model the behavior of probabilities in the long run.</p>
+      <p>The pattern reveals an ordering among a group of B trial counts, and this ordering can be extended to other groups of B trial counts (which means all other trial counts).</p>
+    </div>
+
+    <hr>
+
+    <a class="btn btn-primary" data-toggle="collapse" href="#finding_5" role="button" aria-expanded="false" aria-controls="finding_5">Finding 5</a>
+    <div class="collapse" id="finding_5">
+      <h3>Observation</h3>
+      <p>There are subpatterns in the periodic behavior of the probabilities.</p>
+
+      <h3>Conjecture</h3>
+      <h3>Investigation</h3>
+      <h3>Significance</h3>
+      <p>These subpatterns tell us the exact ordering of trial counts relative to one another.</p>
+      <p>These subpatterns, along with the long run behavior, reveal the optimal trial count for the maximum and minimum probabilities of success over a sequential range of trial counts.</p>
+    </div>
   </div>
 </div>
 {% endblock %}
