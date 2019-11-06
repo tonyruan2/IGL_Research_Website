@@ -11,4 +11,6 @@ body {
 .card-img-top {
   width: 300px;
   height: 250px;
+  border: 2px solid;
+  border-color: #FFF;
 }
