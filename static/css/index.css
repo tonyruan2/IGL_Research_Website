@@ -22,10 +22,21 @@ body {
   background: linear-gradient(63deg, rgba(55,193,182,1) 0%, rgba(224,206,101,1) 100%);
 }
 
+.img_view {
+  box-sizing: border-box;
+  border: 2px solid;
+  border-color: #fff;
+}
+
 #igl-slider {
   margin-left: auto;
   margin-right: auto;
 }
+
+.carousel-indicators {
+    bottom: -50px;
+}
+
 .carousel-inner {
   margin-left: auto;
   margin-right: auto;

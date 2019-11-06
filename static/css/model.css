@@ -9,6 +9,9 @@ body {
 
 .jumbotron {
   background-color: lightblue;
+  border: 2px solid;
+  border-radius: 15px;
+  border-color: #fff;
 }
 
 input[type=number] {
@@ -30,6 +33,8 @@ input[type=radio] {
 }
 
 .model-container {
-  width: 863px;
-  height: 649px;
+  max-width: 863px;
+  max-height: 649px;
+  width: auto;
+  height: auto;
 }

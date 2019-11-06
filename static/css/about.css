@@ -7,3 +7,8 @@ body {
   background: rgb(55,193,182);
   background: linear-gradient(63deg, rgba(55,193,182,1) 0%, rgba(224,206,101,1) 100%);
 }
+
+.card-img-top {
+  width: 300px;
+  height: 250px;
+}

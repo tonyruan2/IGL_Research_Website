@@ -16,7 +16,7 @@ Monotonicty vs Periodicity
 {% block content %}
 <div class="container">
   <div id="findings" class="col-md-12">
-    <h1 class="page-header"><strong>Findings</strong></h1>
+    <h1 class="page-header"><strong>Findings: a general overview</strong></h1>
 
     <a class="btn btn-primary" data-toggle="collapse" href="#finding_1" role="button" aria-expanded="false" aria-controls="finding_1">Finding 1</a>
     <div class="collapse" id="finding_1">
@@ -89,7 +89,7 @@ Monotonicty vs Periodicity
       <img class="example" src="static/img/finding_3_1.png">
 
       <h3>Conjecture</h3>
-      <p>For trial counts in [wB, (w+1)B], where w is a positive integer, the trial count with the maximum probability is:</p>
+      <p>For trial counts in [wB, (w+1)B], where w is an integer greater than 1, the trial count with the maximum probability is:</p>
       <ul>
         <li class="li-example">wB if the overall trend is decreasing or both decreasing and increasing (process < desired OR process == desired)</li>
         <li class="li-example">(w+1)B if the overall trend is increasing (process > desired)</li>
@@ -133,12 +133,13 @@ Monotonicty vs Periodicity
       <h3>Observation</h3>
       <p>There are subpatterns in the periodic behavior of the probabilities.</p>
 
-      <h3>Conjecture</h3>
-      <h3>Investigation</h3>
       <h3>Significance</h3>
       <p>These subpatterns tell us the exact ordering of trial counts relative to one another.</p>
       <p>These subpatterns, along with the long run behavior, reveal the optimal trial count for the maximum and minimum probabilities of success over a sequential range of trial counts.</p>
     </div>
+
+    <hr>
+    <h1>View our comprehensive presentation <a href="https://docs.google.com/presentation/d/1ZjWgJZasIXAp4URzkiMcxXpKvX46gs9jb8Xw7UP0nkw/edit?usp=sharing">here</a>!</h1>
   </div>
 </div>
 {% endblock %}

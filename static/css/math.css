@@ -2,8 +2,10 @@
   margin-bottom: 50px;
 }
 
-.jumbotron {
+#insight_embed {
   background-color:lightblue;
+  border: 2px solid;
+  border-color: #fff;
 }
 
 body {

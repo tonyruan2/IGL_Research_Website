@@ -57,7 +57,7 @@ Monotonicty vs Periodicity
   <br>
   <div class="row jumbotron">
     <h2><strong>User Guide</strong></h2>
-    <p>1) Input valid numbers for the process probability [0 to 1, with increments of 0.001], desired probability [A and B are integers], and max trials [10 to <strong>1000</strong>]. Larger max trial values may cause model generation to take slightly more time.</p>
+    <p>1) Input valid numbers for the process probability [0 to 1, with increments of 0.001], desired probability [A and B are integers], and max trials [10 to <strong>1000</strong>]. Larger max trial values may cause model generation to take slightly more time (and potentially crash).</p>
     <p>2) Select to highlight monotonicity or periodicity if desired.</p>
     <p>3) Select to draw helper lines if desired.</p>
     <p>4) Click the create button to create a model.</p>
@@ -66,7 +66,7 @@ Monotonicty vs Periodicity
     <h2><Strong>Model Information</strong></h2>
     <p>This model shows the probability of achieving at least the desired probability with a certain trial count.</p>
     <p>When monotonicity is selected, the points on the graph are colored according to their trial count mod B, where A divided by B is the desired probability in simplest terms. Points with trial counts that are equivalent mod B have the same color. Preset colors are used for the first 8 groups of values equivalent mod B. Afterwards, random colors are generated for each group of values equivalent mod B.</p>
-    <p>When periodicity is selected, every B trials are colored the same color. For the "Periodicity [0]" option, counting starts implicitly from 0. For the "Periodicity [1]" option, counting starts from 1. Choose the option that grants a greater pattern clarity. Similar to the highlighting when monotonicity is selected, the first eight groups have the same color. Afterwards, random colors are generated.</p>
+    <p>When periodicity is selected, every B trials are colored the same color. For the "Periodicity [0]" option, counting starts implicitly from 0. For the "Periodicity [1]" option, counting starts from 1. "Periodicity [1]" is used in our mathematical pattern analysis, but you may choose the option that grants a greater pattern clarity. Similar to the highlighting when monotonicity is selected, the first eight groups have the same color. Afterwards, random colors are generated.</p>
   </div>
 </div>
 {% endblock %}
