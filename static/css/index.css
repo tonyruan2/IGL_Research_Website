@@ -9,6 +9,7 @@
 }
 
 #overview {
+  background-color: #9999FF;
   box-sizing: border-box;
   border: 2px solid;
   padding: 0 30px 30px 30px;
@@ -29,6 +30,7 @@ body {
 }
 
 #igl-slider {
+  background-color: #3366FF;
   margin-left: auto;
   margin-right: auto;
 }
