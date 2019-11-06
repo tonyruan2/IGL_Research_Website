@@ -6,6 +6,7 @@
 body {
   background: rgb(55,193,182);
   background: linear-gradient(63deg, rgba(55,193,182,1) 0%, rgba(224,206,101,1) 100%);
+  background-size: 100%;
 }
 
 #findings {
@@ -13,8 +14,10 @@ body {
 }
 
 .example {
-  height: 540;
-  width: 970;
+  max-height: 540;
+  max-width: 970;
+  width: 100%;
+  height: auto;
   margin-top: 30px;
   margin-bottom: 30px;
 }
