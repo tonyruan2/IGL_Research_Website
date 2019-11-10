@@ -21,22 +21,28 @@ def bernoulli_trial(success_probability, desired_successes, num_trials):
             failure_probability ** desired_failures)
 
 
-def bernoulli_trial_sum(success_probability, min_successes, num_trials):
+def bernoulli_trial_sum(success_probability, desired_probability, min_successes, num_trials, standardization):
     probability_sum = 0
     desired_successes = int(min_successes)
     while desired_successes <= num_trials:
         probability_sum += bernoulli_trial(success_probability, desired_successes, num_trials)
         desired_successes += 1
+    if standardization == 'p=q':
+        return math.sqrt(num_trials) * (probability_sum - 0.5)
+    if standardization == 'p!=q':
+        decay_rate = math.log10((1 - desired_probability) / (1 - success_probability)) + (desired_probability * math.log10((desired_probability * (1 - success_probability)) / (success_probability * (1 - desired_probability))))
+        return math.sqrt(num_trials) * (probability_sum) * math.exp(decay_rate * num_trials)
     return probability_sum
 
 
-def compute_model(process_prob, desired_numer, desired_denom, num_trials):
+def compute_model(process_prob, desired_numer, desired_denom, num_trials, standardization):
     try:
         current_trial_count = 1
         results = []
+        desired_prob = desired_numer / desired_denom
         while current_trial_count <= num_trials:
             min_successes = math.ceil((desired_numer * current_trial_count) / desired_denom)
-            long_term_prob = bernoulli_trial_sum(process_prob, min_successes, current_trial_count)
+            long_term_prob = bernoulli_trial_sum(process_prob, desired_prob, min_successes, current_trial_count, standardization)
             results.append(long_term_prob)
             current_trial_count += 1
         return results
@@ -70,7 +76,7 @@ def generate_color(periodicity_num, count, highlight):
     return color
 
 
-def create_model(process_prob, desired_numer, desired_denom, num_trials, highlight, lines):
+def create_model(process_prob, desired_numer, desired_denom, num_trials, highlight, lines, standardization):
 
     draw_lines = False
     if lines == 'include':
@@ -89,6 +95,12 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
     else:
         if lines == 'include':
             title += ' (lines drawn)'
+
+    if standardization != '':
+        if standardization == 'p=q':
+            title += ' [stdrd p = q]'
+        elif standardization == 'p!=q':
+            title += ' [stdrd p != q]'
 
     model = figure(plot_width=849,
                   plot_height=660,
@@ -113,16 +125,16 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
     model.yaxis.axis_label_text_font_size = '18pt'
     model.yaxis.major_label_text_font_size = '16pt'
 
-    if highlight == 'monotonicity' or highlight == 'periodicity0' or highlight == 'periodicity1':
+    periodicity_num = int(desired_denom) / int(gcd(int(desired_numer), int(desired_denom)))
+    periodicity_num = int(periodicity_num)
 
-        periodicity_num = int(desired_denom) / int(gcd(int(desired_numer), int(desired_denom)))
-        periodicity_num = int(periodicity_num)
+    if highlight == 'monotonicity' or highlight == 'periodicity0' or highlight == 'periodicity1':
 
         if highlight == 'monotonicity':
             count = 0
             while count < periodicity_num and count <= num_trials:
                 trials = [x for x in range(count, num_trials + 1, periodicity_num) if x != 0 and x <= num_trials]
-                probabilities = [bernoulli_trial_sum(process_prob, math.ceil((desired_numer * current_trial_count) / desired_denom), current_trial_count) for current_trial_count in trials]
+                probabilities = [bernoulli_trial_sum(process_prob, desired_numer / desired_denom, math.ceil((desired_numer * current_trial_count) / desired_denom), current_trial_count, standardization) for current_trial_count in trials]
                 data = {'trial_count': trials,
                         'probability': probabilities}
 
@@ -145,7 +157,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
             trials = [x + 1 for x in range(num_trials)]
             data = {'trial_count': trials,
-                'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials),
+                'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials, standardization),
                 'mod': [(x % periodicity_num) for x in trials]}
 
             data_cds = ColumnDataSource(data)
@@ -174,7 +186,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
                     trials = [x for x in range((count * periodicity_num), ((count + 1) * periodicity_num)) if x != 0 and x <= num_trials]
                 else:
                     trials = [x for x in range((count * periodicity_num) + 1, ((count + 1) * periodicity_num) + 1) if x != 0 and x <= num_trials]
-                probabilities = [bernoulli_trial_sum(process_prob, math.ceil((desired_numer * current_trial_count) / desired_denom), current_trial_count) for current_trial_count in trials]
+                probabilities = [bernoulli_trial_sum(process_prob, desired_numer / desired_denom, math.ceil((desired_numer * current_trial_count) / desired_denom), current_trial_count, standardization) for current_trial_count in trials]
                 data = {'trial_count': trials,
                         'probability': probabilities}
 
@@ -195,8 +207,10 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
                 count += 1
 
-            data = {'trial_count': [x + 1 for x in range(num_trials)],
-                'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials)}
+            trials = [x + 1 for x in range(num_trials)]
+            data = {'trial_count': trials,
+                'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials, standardization),
+                'mod': [(x % periodicity_num) for x in trials]}
 
             data_cds = ColumnDataSource(data)
 
@@ -211,13 +225,16 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
             tooltips = [
                 ('Trial count', '@trial_count'),
                 ('Probability', '@probability'),
+                ('Mod ' + str(periodicity_num), '@mod')
             ]
 
             model.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
 
     else:
-        data = {'trial_count': [x + 1 for x in range(num_trials)],
-            'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials)}
+        trials = [x + 1 for x in range(num_trials)]
+        data = {'trial_count': trials,
+            'probability': compute_model(process_prob, desired_numer, desired_denom, num_trials, standardization),
+            'mod': [(x % periodicity_num) for x in trials]}
 
         data_cds = ColumnDataSource(data)
 
@@ -236,6 +253,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
         tooltips = [
             ('Trial count', '@trial_count'),
             ('Probability', '@probability'),
+            ('Mod ' + str(periodicity_num), '@mod')
         ]
 
         hover_glyph = model.circle(x='trial_count',
@@ -283,6 +301,9 @@ def modelpage():
     num_trials = request.args.get('number_of_trials')
     highlight = request.args.get('highlight')
     lines = request.args.get('lines')
+    standardization = request.args.get('standardization')
+
+    standardization = '' if standardization is None else str(standardization)
 
     if process_prob == None or desired_numer == None or desired_denom == None or num_trials == None:
         process_prob = 0.250
@@ -290,7 +311,7 @@ def modelpage():
         desired_denom = 11
         num_trials = 147
 
-    model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials), str(highlight), str(lines));
+    model = create_model(float(process_prob), int(desired_numer), int(desired_denom), int(num_trials), str(highlight), str(lines), standardization);
     script, div = components(model)
     return render_template('model.html', script=script, div=div, process_prob=process_prob, desired_numer=desired_numer, desired_denom=desired_denom, num_trials=num_trials)
 
