@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
 from flask_nav.elements import Navbar, Subgroup, View
 from flask_nav import Nav
-from bokeh.plotting import figure
+from bokeh.plotting import figure, output_file, show
 from bokeh.embed import components
 from bokeh.models import ColumnDataSource
 from bokeh.models import HoverTool
@@ -269,6 +269,125 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
     return model
 
 
+def mono_model():
+    max_val = 99
+    process_prob_list = [(x + 1) / 100 for x in range(max_val)]
+    desired_numer_list = [(x + 1) for x in range(max_val)]
+    desired_denom = 100
+
+    is_monotone = [[True] * max_val for x in range(max_val)]
+
+    first_index = 0
+    second_index = 0
+
+    upper_bound = ((max_val + 1) * 3) + 1
+    for process_prob in process_prob_list:
+        for desired_numer in desired_numer_list:
+            periodicity_num = int(desired_denom) / int(gcd(int(desired_numer), int(desired_denom)))
+            periodicity_num = int(periodicity_num)
+            probabilities = compute_model(process_prob, desired_numer, desired_denom, upper_bound, "")
+            desired_prob = desired_numer / desired_denom
+            is_process_desired_equal = process_prob == desired_prob
+            is_monotonic_nonincreasing = process_prob < desired_prob
+            is_monotonic_nondecreasing = process_prob > desired_prob
+
+            for i in range(periodicity_num):
+                if probabilities[i] <= 0.00905 or probabilities[i] >= 0.9905:
+                    break
+                second_point = i + periodicity_num
+                if probabilities[second_point] <= 0.00905 or probabilities[second_point] >= 0.9905:
+                    break
+                # third_point = second_point + periodicity_num
+
+                if is_process_desired_equal:
+                    # nondecreasing
+                    if probabilities[i] < 0.5:
+                        first_monotonic_behavior = probabilities[second_point] >= probabilities[i]
+                        # second_monotonic_behavior = probabilities[third_point] >= probabilities[second_point]
+                        if first_monotonic_behavior == False:
+                        # or second_monotonic_behavior == False:
+                            is_monotone[first_index][second_index] = False
+                            break
+                    else:
+                        # nonincreasing
+                        first_monotonic_behavior = probabilities[second_point] <= probabilities[i]
+                        #second_monotonic_behavior = probabilities[third_point] <= probabilities[second_point]
+                        if first_monotonic_behavior == False:
+                            # or second_monotonic_behavior == False:
+                            is_monotone[first_index][second_index] = False
+                            break
+                elif is_monotonic_nonincreasing:
+                    first_monotonic_behavior = probabilities[second_point] <= probabilities[i]
+                    # second_monotonic_behavior = probabilities[third_point] <= probabilities[second_point]
+                    if first_monotonic_behavior == False:
+                    # or second_monotonic_behavior == False:
+                        is_monotone[first_index][second_index] = False
+                        break
+                elif is_monotonic_nondecreasing:
+                    first_monotonic_behavior = probabilities[second_point] >= probabilities[i]
+                    #second_monotonic_behavior = probabilities[third_point] >= probabilities[second_point]
+                    if first_monotonic_behavior == False:
+                        # or second_monotonic_behavior == False:
+                        is_monotone[first_index][second_index] = False
+                        break
+            second_index += 1
+        first_index += 1
+        second_index = 0
+
+    plot = figure(plot_width=1000,
+                  plot_height=1000,
+                  x_range=(0, 1),
+                  y_range=(0, 1),
+                  x_axis_label='Process probability',
+                  y_axis_label='Desired probability',
+                  title='Monotonicity Plot', tools='pan, wheel_zoom, reset, save',
+                  active_drag='pan', active_scroll='wheel_zoom')
+
+    plot.background_fill_color = 'beige'
+
+    plot.border_fill_color = 'whitesmoke'
+    plot.min_border = 60
+
+    plot.title.text_font_size = '20pt'
+
+    plot.xaxis.axis_label_text_font_size = '18pt'
+    plot.xaxis.major_label_text_font_size = '16pt'
+
+    plot.yaxis.axis_label_text_font_size = '18pt'
+    plot.yaxis.major_label_text_font_size = '16pt'
+
+    for i in range(max_val):
+        process_prob = process_prob_list[i]
+        monotone_probs = [process_prob_list[j] for j in range(max_val) if is_monotone[i][j]]
+        non_monotone_probs = [process_prob_list[j] for j in range(max_val) if is_monotone[i][j] == False]
+
+        plot.circle(x=[process_prob for x in range(len(monotone_probs))], y=monotone_probs, size=10,
+                  color='blue')
+        plot.circle(x=[process_prob for x in range(len(non_monotone_probs))], y=non_monotone_probs, size=10,
+                  color='red')
+
+    data = {'process_probability': [process_prob_list[i] for i in range(max_val) for j in range(max_val)],
+        'desired_probability': [process_prob_list[i] for j in range(max_val) for i in range(max_val)]}
+
+    data_cds = ColumnDataSource(data)
+
+    tooltips = [
+        ('P', '@process_probability'),
+        ('Q', '@desired_probability')
+    ]
+
+    hover_glyph = plot.circle(x='process_probability',
+                              y='desired_probability',
+                              source=data_cds,
+                              size=15,
+                              alpha=0,
+                              hover_fill_color='green',
+                              hover_alpha=1)
+
+    plot.add_tools(HoverTool(tooltips=tooltips, renderers=[hover_glyph]))
+    show(plot)
+
+
 app = Flask(__name__)
 Bootstrap(app)
 nav = Nav(app)
@@ -324,6 +443,11 @@ def findingspage():
 @app.route('/about')
 def aboutpage():
     return render_template('about.html')
+
+
+@app.route('/secret')
+def secretpage():
+    mono_model()
 
 
 if __name__ == '__main__':
