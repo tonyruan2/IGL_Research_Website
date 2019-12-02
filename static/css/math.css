@@ -1,3 +1,7 @@
+.nav a {
+  color: #000 !important;
+}
+
 .container {
   margin-bottom: 50px;
 }

@@ -19,92 +19,99 @@ Monotonicty vs Periodicity
 <div class="container">
 
   <div class="text-center">
-    <h1 class="title">Monotonicty vs Periodicity</h1>
-    <h1>in the</h1>
-    <h1>Law of Large Numbers</h1>
+    <h1 class="title"> <span style="color:blue">Monotonicty</span><span> vs <span style="color:#ff0000;">P</span><span style="color:#ff4000;">e</span><span style="color:#ff7f00;">r</span><span style="color:#ffbf00;">i</span><span style="color:#ffff00;">o</span><span style="color:#80ff00;">d</span><span style="color:#00ff00;">i</span><span style="color:#00ff80;">c</span><span style="color:#00ffff;">i</span><span style="color:#0080ff;">t</span><span style="color:#0000ff;">y</span>
+    </h1>
+    <h1>in the Law of Large Numbers</h1>
   </div>
 
-  <div id="overview" class="container col-md-12">
-    <h1 class="page-header"><strong>Project Overview</strong></h1>
-    <p">Suppose we have a process that succeeds X% amount of time and all experiments are independent. Let’s call X the process probability.</p>
-    <p>We want to achieve at least Y% success when running the process over a set number of trials N. Let’s call Y the desired probability, and assume Y is rational. That is, Y can be written as a over b, where a and b are integers.</p>
-    <p>What value of N will give us the greatest probability to achieve <em>at least</em> our desired probability?</p>
-    <hr>
-    <p>The Law of Large Numbers tells us three possible behaviors as N tends to infinity.</p>
-    <ul>
-      <li>If our process probability is <strong>less than</strong> our desired probability, we will have a <strong>0%</strong> chance to reach our desired probability.</li> <br>
-      <li>If our process probability is <strong>equal to</strong> our desired probability, we will have a <strong>50%</strong> chance to reach our desired probability.</li> <br>
-      <li>If our process probability is <strong>greater than</strong> our desired probability, we will have a <strong>100%</strong> chance to reach our desired probability.</li>
-    </ul>
-    <hr>
-    <p>But suppose we cannot run the process a large amount of times. That is, suppose the process is costly to run and requires a substantial amount of resources.</p>
-    <p>Let’s limit the number of trials N to a positive integer T, which is less than or equal to 1000. In other words, assume we have the resources to run between 1 and T trials.</p>
-    <p>Then what should we choose N to be to maximize our probability to achieve our desired probability? Alternatively, what should we choose N to be to minimize our probability to achieve our desired probability?</p>
-    <hr>
-    <p>It turns out that there are certain monotonic and periodic behaviors related to the trial count and the probability to achieve our desired probability.</p>
-    <p>The goal of our project is to investigate these monotonic and periodic behaviors in the mathematical scenario described.</p>
+  <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#overview">Overview</a></li>
+      <li><a data-toggle="tab" href="#img_view">Gallery</a></li>
+  </ul>
+
+  <div class="break">
+
   </div>
 
-</div>
+  <div class="tab-content">
+      <div id="overview" class="tab-pane fade in active col-md-12">
+        <h1 class="page-header"><strong>Project Overview</strong></h1>
+        <p">Suppose we have a process that succeeds X% amount of time and all experiments are independent. Let’s call X the process probability.</p>
+        <p>We want to achieve at least Y% success when running the process over a set number of trials N. Let’s call Y the desired probability, and assume Y is rational. That is, Y can be written as a over b, where a and b are integers.</p>
+        <p>What value of N will give us the greatest probability to achieve <em>at least</em> our desired probability?</p>
+        <hr>
+        <p>The Law of Large Numbers tells us three possible behaviors as N tends to infinity.</p>
+        <ul>
+          <li>If our process probability is <strong>less than</strong> our desired probability, we will have a <strong>0%</strong> chance to reach our desired probability.</li> <br>
+          <li>If our process probability is <strong>equal to</strong> our desired probability, we will have a <strong>50%</strong> chance to reach our desired probability.</li> <br>
+          <li>If our process probability is <strong>greater than</strong> our desired probability, we will have a <strong>100%</strong> chance to reach our desired probability.</li>
+        </ul>
+        <hr>
+        <p>But suppose we cannot run the process a large amount of times. That is, suppose the process is costly to run and requires a substantial amount of resources.</p>
+        <p>Let’s limit the number of trials N to a positive integer T, which is less than or equal to 1000. In other words, assume we have the resources to run between 1 and T trials.</p>
+        <p>Then what should we choose N to be to maximize our probability to achieve our desired probability? Alternatively, what should we choose N to be to minimize our probability to achieve our desired probability?</p>
+        <hr>
+        <p>It turns out that there are certain monotonic and periodic behaviors related to the trial count and the probability to achieve our desired probability.</p>
+        <p>The goal of our project is to investigate these monotonic and periodic behaviors in the mathematical scenario described.</p>
+      </div>
 
-<div class="container">
-  <div class="img_view">
-    <div class="row">
-      <div class="col-md-12">
+      <div id="img_view" class="tab-pane fade col-md-12">
+        <div class="row">
+          <div class="col-md-12">
 
-        <div id="igl-slider" class="carousel slide" data-ride="carousel">
+            <div id="igl-slider" class="carousel slide" data-ride="carousel">
 
-        <ol class="carousel-indicators">
-          <li data-target="#igl-slider" data-slide-to="0" class="active"></li>
-          <li data-target="#igl-slider" data-slide-to="1"></li>
-          <li data-target="#igl-slider" data-slide-to="2"></li>
-          <li data-target="#igl-slider" data-slide-to="3"></li>
-          <li data-target="#igl-slider" data-slide-to="4"></li>
-          <li data-target="#igl-slider" data-slide-to="5"></li>
-        </ol>
+            <ol class="carousel-indicators">
+              <li data-target="#igl-slider" data-slide-to="0" class="active"></li>
+              <li data-target="#igl-slider" data-slide-to="1"></li>
+              <li data-target="#igl-slider" data-slide-to="2"></li>
+              <li data-target="#igl-slider" data-slide-to="3"></li>
+              <li data-target="#igl-slider" data-slide-to="4"></li>
+              <li data-target="#igl-slider" data-slide-to="5"></li>
+            </ol>
 
-          <div class="carousel-inner" role="listbox">
+              <div class="carousel-inner" role="listbox">
 
-            <div class="item active">
-              <img src="static/img/bokeh_carousel_1.png" alt="bokeh_1">
-            </div>
+                <div class="item active">
+                  <img src="static/img/bokeh_carousel_1.png" alt="bokeh_1">
+                </div>
 
-            <div class="item">
-              <img src="static/img/bokeh_carousel_2.png" alt="bokeh_2">
-            </div>
+                <div class="item">
+                  <img src="static/img/bokeh_carousel_2.png" alt="bokeh_2">
+                </div>
 
-            <div class="item">
-              <img src="static/img/bokeh_carousel_3.png" alt="bokeh_3">
-            </div>
+                <div class="item">
+                  <img src="static/img/bokeh_carousel_3.png" alt="bokeh_3">
+                </div>
 
-            <div class="item">
-              <img src="static/img/bokeh_carousel_4.png" alt="bokeh_4">
-            </div>
+                <div class="item">
+                  <img src="static/img/bokeh_carousel_4.png" alt="bokeh_4">
+                </div>
 
-            <div class="item">
-              <img src="static/img/bokeh_carousel_5.png" alt="bokeh_5">
-            </div>
+                <div class="item">
+                  <img src="static/img/bokeh_carousel_5.png" alt="bokeh_5">
+                </div>
 
-            <div class="item">
-              <img src="static/img/bokeh_carousel_6.png" alt="bokeh_6">
+                <div class="item">
+                  <img src="static/img/bokeh_carousel_6.png" alt="bokeh_6">
+                </div>
+
+              </div>
+
+
+              <a class="left carousel-control" href="#igl-slider" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+
+              <a class="right carousel-control" href="#igl-slider" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
             </div>
 
           </div>
-
-
-          <a class="left carousel-control" href="#igl-slider" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-
-          <a class="right carousel-control" href="#igl-slider" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
         </div>
-
-        </div>
-      </div>
   </div>
 
 </div>

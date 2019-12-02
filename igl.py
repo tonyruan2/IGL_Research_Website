@@ -270,6 +270,7 @@ def create_model(process_prob, desired_numer, desired_denom, num_trials, highlig
 
 
 def mono_model():
+    # model for probabilities p, q in [0.01, 0.99] with increments of 0.01
     max_val = 99
     process_prob_list = [(x + 1) / 100 for x in range(max_val)]
     desired_numer_list = [(x + 1) for x in range(max_val)]
@@ -280,56 +281,76 @@ def mono_model():
     first_index = 0
     second_index = 0
 
-    upper_bound = ((max_val + 1) * 3) + 1
+    using_tolerance = True
+    tolerance = 0.0000000001
+    #zero_bound = 0
+    #one_bound = 1
+    #half_upper_bound = 0.5
+    #half_lower_bound = 0.5
+    zero_bound = tolerance
+    one_bound = 1 - tolerance
+    half_upper_bound = 0.5 + tolerance
+    half_lower_bound = 0.5 - tolerance
+
     for process_prob in process_prob_list:
         for desired_numer in desired_numer_list:
             periodicity_num = int(desired_denom) / int(gcd(int(desired_numer), int(desired_denom)))
             periodicity_num = int(periodicity_num)
-            probabilities = compute_model(process_prob, desired_numer, desired_denom, upper_bound, "")
+            probabilities = compute_model(process_prob, desired_numer, desired_denom, 2 * periodicity_num, "")
             desired_prob = desired_numer / desired_denom
+
             is_process_desired_equal = process_prob == desired_prob
             is_monotonic_nonincreasing = process_prob < desired_prob
             is_monotonic_nondecreasing = process_prob > desired_prob
 
             for i in range(periodicity_num):
-                if probabilities[i] <= 0.00905 or probabilities[i] >= 0.9905:
-                    break
                 second_point = i + periodicity_num
-                if probabilities[second_point] <= 0.00905 or probabilities[second_point] >= 0.9905:
-                    break
-                # third_point = second_point + periodicity_num
+
+                if using_tolerance:
+                    if probabilities[i] <= zero_bound or probabilities[i] >= one_bound:
+                        break
+                    if probabilities[second_point] <= zero_bound or probabilities[second_point] >= one_bound:
+                        break
+                    if abs(probabilities[second_point] - probabilities[i]) <= zero_bound:
+                        break
 
                 if is_process_desired_equal:
                     # nondecreasing
                     if probabilities[i] < 0.5:
+
+                        if using_tolerance:
+                            if probabilities[i] >= half_lower_bound:
+                                if probabilities[i] >= half_upper_bound:
+                                    is_monotone[first_index][second_index] = False
+                                    break
+                                break
+
                         first_monotonic_behavior = probabilities[second_point] >= probabilities[i]
-                        # second_monotonic_behavior = probabilities[third_point] >= probabilities[second_point]
                         if first_monotonic_behavior == False:
-                        # or second_monotonic_behavior == False:
                             is_monotone[first_index][second_index] = False
                             break
                     else:
+                        if using_tolerance:
+                            if probabilities[i] <= half_upper_bound:
+                                break
                         # nonincreasing
                         first_monotonic_behavior = probabilities[second_point] <= probabilities[i]
-                        #second_monotonic_behavior = probabilities[third_point] <= probabilities[second_point]
                         if first_monotonic_behavior == False:
-                            # or second_monotonic_behavior == False:
                             is_monotone[first_index][second_index] = False
                             break
+
                 elif is_monotonic_nonincreasing:
                     first_monotonic_behavior = probabilities[second_point] <= probabilities[i]
-                    # second_monotonic_behavior = probabilities[third_point] <= probabilities[second_point]
                     if first_monotonic_behavior == False:
-                    # or second_monotonic_behavior == False:
                         is_monotone[first_index][second_index] = False
                         break
+
                 elif is_monotonic_nondecreasing:
                     first_monotonic_behavior = probabilities[second_point] >= probabilities[i]
-                    #second_monotonic_behavior = probabilities[third_point] >= probabilities[second_point]
                     if first_monotonic_behavior == False:
-                        # or second_monotonic_behavior == False:
                         is_monotone[first_index][second_index] = False
                         break
+
             second_index += 1
         first_index += 1
         second_index = 0
@@ -340,7 +361,7 @@ def mono_model():
                   y_range=(0, 1),
                   x_axis_label='Process probability',
                   y_axis_label='Desired probability',
-                  title='Monotonicity Plot', tools='pan, wheel_zoom, reset, save',
+                  title='Monotonicity Plot (blue = monotone) [tolerance: ' + str(tolerance) + ']', tools='pan, wheel_zoom, reset, save',
                   active_drag='pan', active_scroll='wheel_zoom')
 
     plot.background_fill_color = 'beige'
@@ -372,8 +393,8 @@ def mono_model():
     data_cds = ColumnDataSource(data)
 
     tooltips = [
-        ('P', '@process_probability'),
-        ('Q', '@desired_probability')
+        ('p', '@process_probability'),
+        ('q', '@desired_probability')
     ]
 
     hover_glyph = plot.circle(x='process_probability',

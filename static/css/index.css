@@ -3,13 +3,22 @@
   margin-bottom: 50px
 }
 
+.break {
+  margin-top: 25px;
+  margin-bottom: 25px
+}
+
 .title {
   font-family: 'Francois One', serif;
-  font-size: 60px;
+  font-size: 50px;
+}
+
+.nav a {
+  color: #000 !important;
 }
 
 #overview {
-  background-color: #9999FF;
+  background-color: lightblue;
   box-sizing: border-box;
   border: 2px solid;
   padding: 0 30px 30px 30px;
@@ -23,10 +32,11 @@ body {
   background: linear-gradient(63deg, rgba(55,193,182,1) 0%, rgba(224,206,101,1) 100%);
 }
 
-.img_view {
-  box-sizing: border-box;
+#img_view {
+  padding: 0 0 0 0;
   border: 2px solid;
   border-color: #fff;
+  background-color: #fff;
 }
 
 #igl-slider {
