@@ -152,7 +152,7 @@ Monotonicty vs Periodicity
     <a class="btn btn-primary" data-toggle="collapse" href="#finding_6" role="button" aria-expanded="false" aria-controls="finding_6">Finding 6</a>
     <div class="collapse" id="finding_6">
       <h3>Observation</h3>
-      <p>Some combinations of process and desired probabiliies exhibit monotone behavior (across trial counts equivalent mod B) while other combinations do not.</p>
+      <p>Some combinations of process and desired probabiliies exhibit monotonic behavior (across trial counts equivalent mod B) while other combinations do not.</p>
 
       <img class="example2" src="static/img/finding_6_1.png">
       <img class="example2" src="static/img/finding_6_2.png">
@@ -165,8 +165,13 @@ Monotonicty vs Periodicity
       <img class="example3" src="static/img/finding_6_4.png">
 
       <h3>Significance</h3>
-      <p>In cases where monotonic behavior is found, the ordering of trial counts in the first interval (0, B] is preserved in all intervals (wB, (w+1)B] where w >= 0.</p>
-      <p>This makes it easier to find the trial count that gives the maximum probability. All that is needed is the relative ordering of one interval bounded by sequential multiples of B (lower bound open, upper bound closed) to find the relative ordering of trial counts in all such intervals.</p>
+      <p>We now know which combinations of process and desired probabilities exhibit monotonic behavior. Thus, in these cases, we can directly compare trial counts in the same mod B equivalence group using the long-run behavior.
+      <p>Assuming our combination of process and desired probabilities exhibits monotonic behavior: </p>
+      <ul>
+        <li class="li-example">If the long-run behavior is monotone decreasing, increasing the trial count in an equivalence class will always lead to a decrease in probability.</li>
+        <li class="li-example">If the long-run behavior is monotone increasing, increasing the trial count in an equivalence class will always lead to an increase in probability.</li>
+        <li class="li-example">If the long-run behavior is a convergence to 0.5, increasing the trial count in an equivalence class will always lead to a probability closer to 0.5.</li>
+      </ul>
     </div>
 
     <hr>
