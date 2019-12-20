@@ -51,3 +51,9 @@ p {
 .li-example {
   font-size: 18px;
 }
+
+#poster_embed {
+  background-color:lightblue;
+  border: 2px solid;
+  border-color: #fff;
+}
