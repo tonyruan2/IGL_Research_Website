@@ -6,7 +6,7 @@ Flask-Bootstrap==3.3.7.1
 flask-nav==0.6
 gunicorn==19.9.0
 itsdangerous==1.1.0
-Jinja2==2.10.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 numpy==1.17.2
 packaging==19.2
